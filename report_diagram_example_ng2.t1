@@ -1,0 +1,7 @@
+% report_diagram_example_ng2.t1 -- generated automatically from report_diagram_example_ng2.log
+% Think twice before editing THIS file!
+\fmfL(-4.24265,-4.24265,rt){$a_1$}
+\fmfL(-4.24265,44.24265,rb){$a_2$}
+\fmfL(44.24265,-4.24265,lt){$a_n$}
+\fmfL(46,20,l){$\vdots $}
+\fmfL(44.24265,44.24265,lb){$a_3$}

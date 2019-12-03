@@ -1,0 +1,16 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  3 DEC 2019 16:19
+**report_diagram_fierz3.mf
+(report_diagram_fierz3.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+:1:\fmfL(-5.36655,-2.68332,rt){$i_1$}%
+:1:\fmfL(-5.36655,22.68332,rb){$\bar {\jmath }_1$}%
+:1:\fmfL(45.36655,-2.68332,lt){$\bar {\jmath }_2$}%
+:1:\fmfL(45.36655,22.68332,lb){$i_2$}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 630 strings out of 5274
+ 7481 string characters out of 69975
+ 39585 words of memory out of 5000000
+ 1377 symbolic tokens out of 9500
+ 14i,67n,4r,28p,118b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on report_diagram_fierz3.2602gf (1 character, 7248 bytes).

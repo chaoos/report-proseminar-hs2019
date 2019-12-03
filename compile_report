@@ -1,0 +1,36 @@
+!#/bin/bash
+
+if [ "$1" = "all" ]; then
+  feynmf report.tex
+  ls report_diagram*.mf | xargs -n1 mf
+fi
+
+if [ "$1" = "fd" ]; then
+  feynmf report.tex
+  ls report_diagram*.mf | xargs -n1 mf
+fi
+
+if [ "$1" = "fdr" ]; then
+  feynmf report.tex
+  ls report_diagram*.mf | xargs -n1 mf
+  pdflatex -halt-on-error report.tex
+fi
+
+if [ "$1" = "all" ]; then
+  pdflatex -halt-on-error report.tex
+  bibtex report
+  pdflatex -halt-on-error report.tex
+  pdflatex -halt-on-error report.tex
+fi
+
+if [ "$1" = "bib" ]; then
+  pdflatex -halt-on-error report.tex
+  bibtex report
+  pdflatex -halt-on-error report.tex
+  pdflatex -halt-on-error report.tex
+fi
+
+if [ "$1" = "" ]; then
+  pdflatex -halt-on-error report.tex
+fi
+

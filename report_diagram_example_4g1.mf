@@ -1,0 +1,31 @@
+% report_diagram_example_4g1.mf -- do not edit, generated automatically by report.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 40*1.0pt#, 40*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+straight_galleries;
+save arrow_len; arrow_len:=1.5mm;
+save curly_len; curly_len:=1.5mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vleft (__g1, __g2);
+vright (__g4, __g3);
+vconnect ("gluon", __g1, __v);
+vconnect ("gluon", __g2, __v);
+vconnect ("gluon", __g3, __v);
+vconnect ("gluon", __g4, __v);
+vlabel ("$a$", __g1);
+vlabel ("$b$", __g2);
+vlabel ("$c$", __g3);
+vlabel ("$d$", __g4);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;

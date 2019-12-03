@@ -1,0 +1,5 @@
+% diagram8.t1 -- generated automatically from diagram8.log
+% Think twice before editing THIS file!
+\fmfL(10,6.5,t){$p$}
+\fmfL(26,12.5,l){$\nu $}
+\fmfL(-6,12.5,r){$\mu $}

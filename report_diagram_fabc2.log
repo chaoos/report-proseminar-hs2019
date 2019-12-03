@@ -1,0 +1,18 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  3 DEC 2019 16:19
+**report_diagram_fabc2.mf
+(report_diagram_fabc2.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+:1:\fmfL(12.00876,21.08325,rb){$i$}%
+:1:\fmfL(37.99124,21.08325,lb){$j$}%
+:1:\fmfL(25,-1.80653,t){$k$}%
+:1:\fmfL(25,46,b){$b$}%
+:1:\fmfL(-4.68521,-3.74817,rt){$a$}%
+:1:\fmfL(54.68521,-3.74817,lt){$c$}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 645 strings out of 5274
+ 7495 string characters out of 69975
+ 56559 words of memory out of 5000000
+ 1377 symbolic tokens out of 9500
+ 14i,67n,58r,28p,117b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on report_diagram_fabc2.2602gf (1 character, 18232 bytes).

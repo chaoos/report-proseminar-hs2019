@@ -1,0 +1,32 @@
+% report_diagram_fabc3.mf -- do not edit, generated automatically by report.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 50*1.0pt#, 40*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+straight_galleries;
+save arrow_len; arrow_len:=2mm;
+save curly_len; curly_len:=2mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vtop (__g2);
+vbottom (__g1, __g3);
+vconnect ("gluon", __g1, __v1);
+vconnect ("gluon", __g2, __v2);
+vconnect ("gluon", __g3, __v3);
+vconnect ("fermion,label=$i$,right=0.6,tension=0.7", __v2, __v1);
+vconnect ("fermion,label=$j$,right=0.6,tension=0.7", __v3, __v2);
+vconnect ("fermion,label=$k$,right=0.6,tension=0.7", __v1, __v3);
+vlabel ("$a$", __g1);
+vlabel ("$b$", __g2);
+vlabel ("$c$", __g3);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;

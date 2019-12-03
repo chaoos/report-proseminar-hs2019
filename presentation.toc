@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{Color Ordering}{3}{0}{1}
+\beamer@sectionintoc {2}{Spinor helicity formalism for massless vector bosons}{25}{0}{2}
+\beamer@sectionintoc {3}{Parke-Taylor Formula / Berends-Giele Recursion}{39}{0}{3}
+\beamer@sectionintoc {4}{Numerical demonstration}{65}{0}{4}

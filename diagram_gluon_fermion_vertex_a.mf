@@ -1,0 +1,29 @@
+% diagram_gluon_fermion_vertex_a.mf -- do not edit, generated automatically by report.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 30*1.0pt#, 30*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+straight_galleries;
+save arrow_len; arrow_len:=2mm;
+save curly_len; curly_len:=2mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vright (__f1, __f2);
+vleft (__g1);
+vconnect ("gluon", __g1, __v);
+vlabel ("$a,\mu $", __g1);
+vconnect ("fermion", __v, __f1);
+vlabel ("$f^{\prime },\bar {\jmath }$", __f1);
+vconnect ("fermion", __f2, __v);
+vlabel ("$f,i$", __f2);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;

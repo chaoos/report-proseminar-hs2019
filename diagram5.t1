@@ -1,0 +1,5 @@
+% diagram5.t1 -- generated automatically from diagram5.log
+% Think twice before editing THIS file!
+\fmfL(-6,15,r){$k,\mu $}
+\fmfL(34.24265,-4.24265,lt){$q,\rho $}
+\fmfL(34.24265,34.24265,lb){$p,\nu $}

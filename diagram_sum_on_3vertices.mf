@@ -1,0 +1,40 @@
+% diagram_sum_on_3vertices.mf -- do not edit, generated automatically by presentation.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 60*1.0pt#, 60*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+save arrow_len; arrow_len:=2mm;
+save curly_len; curly_len:=2mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vsurround (__gi, __ gu1, __ gu2, __ phu1, __ guin, __ gui, __ gd1, __ gd2, __ phd1, __ gdnm, __ gdn);
+vconnect ("gluon", __gi, __vc);
+vdot (__vc);
+vlabel ("$V_3$", __vc);
+vconnect ("gluon", __vc, __vu);
+vblob ((.15w), __vu);
+vvertex ("decoration.shape=circle,decoration.filled=empty,decoration.size=.25w,label=$J^{\mu }$,label.dist=0", __vu);
+vconnect ("gluon", __vu, __gu1);
+vconnect ("gluon", __vu, __gu2);
+vconnect ("phantom", __vu, __phu1);
+vconnect ("gluon", __vu, __guin);
+vconnect ("gluon", __vu, __gui);
+vconnect ("gluon", __vc, __vd);
+vblob ((.15w), __vd);
+vvertex ("decoration.shape=circle,decoration.filled=empty,decoration.size=.25w,label=$J^{\mu }$,label.dist=0", __vd);
+vconnect ("gluon", __vd, __gd1);
+vconnect ("gluon", __vd, __gd2);
+vconnect ("phantom", __vd, __phd1);
+vconnect ("gluon", __vd, __gdnm);
+vconnect ("gluon", __vd, __gdn);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;

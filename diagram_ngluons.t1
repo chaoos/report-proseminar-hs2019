@@ -1,0 +1,9 @@
+% diagram_ngluons.t1 -- generated automatically from diagram_ngluons.log
+% Think twice before editing THIS file!
+\fmfL(66,30,l){$\vdots $}
+\fmfL(56.74265,56.74265,lb){$2$}
+\fmfL(30,66,b){$1$}
+\fmfL(-6,30,r){$\mu $}
+\fmfL(30,-6,t){$n$}
+\fmfL(56.74265,3.25735,lt){$n-1$}
+\fmfL(30,30,c){$J^{\mu }$}

@@ -1,0 +1,15 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  17 NOV 2019 22:55
+**diagram8.mf
+(diagram8.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+:1:\fmfL(10,6.5,t){$p$}%
+:1:\fmfL(26,12.5,l){$\nu $}%
+:1:\fmfL(-6,12.5,r){$\mu $}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 613 strings out of 5274
+ 7087 string characters out of 69975
+ 39369 words of memory out of 5000000
+ 1376 symbolic tokens out of 9500
+ 13i,67n,56r,26p,105b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on diagram8.2602gf (1 character, 3984 bytes).

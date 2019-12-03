@@ -1,0 +1,17 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  17 NOV 2019 22:55
+**diagram_co_gluon_fermion_vertex_b.mf
+(diagram_co_gluon_fermion_vertex_b.mf
+(/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+:1:\fmfL(-4.24265,-4.24265,rt){$f^{\prime }$}%
+:1:\fmfL(-4.24265,34.24265,rb){$f$}%
+:1:\fmfL(36,15,l){$\mu $}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 620 strings out of 5274
+ 7431 string characters out of 69975
+ 44141 words of memory out of 5000000
+ 1378 symbolic tokens out of 9500
+ 14i,67n,56r,28p,137b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on diagram_co_gluon_fermion_vertex_b.2602gf (1 character, 7744 b
+ytes).

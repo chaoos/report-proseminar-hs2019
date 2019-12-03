@@ -1,0 +1,7 @@
+% report_diagram_example_4g5.t1 -- generated automatically from report_diagram_example_4g5.log
+% Think twice before editing THIS file!
+\fmfL(29.99994,13.99997,t){$e$}
+\fmfL(-4.99228,-3.32822,rt){$a$}
+\fmfL(-4.99228,43.32822,rb){$b$}
+\fmfL(64.99228,-3.32822,lt){$d$}
+\fmfL(64.99228,43.32822,lb){$c$}

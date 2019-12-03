@@ -1,0 +1,5 @@
+% diagram_gluon_fermion_vertex_a.t1 -- generated automatically from diagram_gluon_fermion_vertex_a.log
+% Think twice before editing THIS file!
+\fmfL(34.24265,-4.24265,lt){$f^{\prime },\bar {\jmath }$}
+\fmfL(34.24265,34.24265,lb){$f,i$}
+\fmfL(-6,15,r){$a,\mu $}

@@ -1,0 +1,5 @@
+mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 diagram_3gluon_vertex
+mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 diagram_3gluon_vertex
+mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 diagram_3gluon_vertex
+mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 diagram_3gluon_vertex
+mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 report_diagram_example_4g7

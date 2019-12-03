@@ -1,0 +1,6 @@
+% diagram6.t1 -- generated automatically from diagram6.log
+% Think twice before editing THIS file!
+\fmfL(-4.24265,-4.24265,rt){$\sigma $}
+\fmfL(-4.24265,34.24265,rb){$\mu $}
+\fmfL(34.24265,-4.24265,lt){$\rho $}
+\fmfL(34.24265,34.24265,lb){$\nu $}

@@ -1,0 +1,1011 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{physics}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{slashed} % Feynman slash notation
+\usepackage{pgfplots}
+\usepackage{feynmf} % for feynman diagrams
+
+\newcommand{\eqname}[1]{\tag*{#1}}% Tag equation with name
+\newcommand{\qwdots}{\ar@{.}[]+<-1em,0em>;[]+<0em,0em>}
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark} % arrow pointing to character in equation https://tex.stackexchange.com/questions/191217/arrow-pointing-to-subscript-in-equation
+
+\usepackage[bottom]{footmisc} % put footnote at the bottom of the page https://tex.stackexchange.com/questions/9425/how-to-fix-footnote-position-at-the-bottom-of-the-page
+
+\usepackage[
+    type={CC},
+    modifier={by-sa},
+    version={4.0}
+]{doclicense}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{example}{Example}[section]
+
+\allowdisplaybreaks % page breaks in equations
+\graphicspath{ {./img/} }
+
+\geometry{
+ a4paper,
+ left=29mm,
+ right=29mm,
+ top=20mm,
+ }
+
+\title{Proseminar on Computational Methods in QFT \\ Berends Giele Recursion \\ Report}
+\author{Roman Gruber}
+\date{ETH Zürich, October 2019}
+
+\numberwithin{equation}{section}
+\begin{document}
+
+\maketitle
+
+\abstract 
+TODO
+\newline
+
+\doclicenseThis
+
+\noindent\textcolor{gray}{\hrulefill}
+
+\tableofcontents
+
+\noindent\textcolor{gray}{\hrulefill}
+
+\section{Introduction}
+
+TODO
+
+\section{The Spinor helicity formalism}
+
+TODO
+
+\section{Important identities and definitions}
+
+The Fierz identity:
+
+\begin{align}
+    \langle i | \sigma^{\mu} | j \rbrack \langle k | \sigma_{\mu} | l \rbrack &= 2 \langle ik \rangle \lbrack lj \rbrack \label{eq:fierz} 
+\end{align}
+
+Charge conjugation:
+
+\begin{align}
+    \langle i | \sigma^{\mu} | j \rbrack &= \lbrack j | \overline{\sigma}^{\mu} | i \rangle \label{eq:ijji}
+\end{align}
+
+The Schouten identity:
+
+\begin{align}
+    \langle ij \rangle \bra{k} + \langle jk \rangle \bra{i} + \langle ki \rangle \bra{j} = 0 \label{eq:schouten}
+\end{align}
+
+\begin{definition}[Momenta]
+
+\begin{align}
+     P_{i,j} &= p_i + \dots + p_j \\
+     s_{ij} &= \left( p_i + p_j \right)^2
+\end{align}
+
+\end{definition}
+
+\begin{definition}[Spinor product]
+
+\begin{align}
+     \langle ij \rangle \lbrack ji \rbrack = 2 p_i \cdot p_j = s_{ij} \label{eq:ij}
+\end{align}
+
+\end{definition}
+
+\begin{definition}[Feynman slash notation]
+
+\begin{align}
+     \slashed{p} = \sigma^{\mu} p_{\mu} = p^{\mu} \sigma_{\mu} = | p \rangle \lbrack p | + | p \rbrack \langle p | \label{eq:slash}
+\end{align}
+
+\end{definition}
+
+\section{Color Ordering}
+
+Color ordering is a concept to treat the color component of scattering amplitudes. We want to decompose the problem into subproblems. This can be achieved by color ordering. In the Feynman rules of QCD, there is a lot of color dependency.
+
+\subsection{QCD gauge group}
+
+The gauge group of QCD is $SU(N_c)$ - unitary $N_c \times N_c$ matrices with unit determinant - with $N_c = 3$ the number of colors. The Lie algebra of this group is $\mathfrak{su}(N_c)$ - traceless hermitian $N_c \times N_c$ matrcies. The unit determinant converts to tracelessness, when going to the Lie algebra. The dimension of both the gauge group and its Lie algebra is $N_c^2 - 1$ (the tracelessness condition removes one dimention). We therefore have a basis of the Lie algebra - the generators of the gauge group - denoted by $T^a$, where $a$ is the adjoint color index going from $1$ to $N_c^2 - 1 = 8$.
+
+\begin{prop}[Fierz identity]
+\label{prop:fierz}
+
+The generators $T^a$ of the gauge group satisfy the following identity:
+
+\begin{align}
+    {\left( T^a \right)_{i_1}}^{\bar{\jmath}_1} {\left( T^a \right)_{i_2}}^{\bar{\jmath}_2} = {\delta_{i_1}}^{\bar{\jmath}_2} {\delta_{i_2}}^{\bar{\jmath}_1} - \frac{1}{N_c} {\delta_{i_1}}^{\bar{\jmath}_1} {\delta_{i_2}}^{\bar{\jmath}_2} \label{eq:fierz2} 
+\end{align}
+
+\end{prop}
+
+\begin{proof}
+
+Equation \eqref{eq:fierz2} is just the statement that the $T^a$ together with the identity form a basis of the $N_c \times N_c$ hermitian matrices. The $T^a$ are a basis of $N_c \times N_c$ traceless hermitian matrices, since the identity is linearly indepdenant of all $T^a$. An arbitrary hermitian matrix $A$ can therefore be written as
+
+\begin{align*}
+    A = \sum_{a=1}^{N_c^2 -1} b_a T^a + b_n id,
+\end{align*}
+
+where $n=N_c^2$. We now apply the trace on both sides of that equation:
+
+\begin{align*}
+    tr \left( A \right) = b_n N_c,
+\end{align*}
+
+where we have used the fact that the $T^a$ are traceless and the trace of the identity is its dimension. We obtain the $n$-th coefficient $b_n = tr \left( A \right) /N_c$. We can also multiply both sides with $T^c$ and then take the trace and obtain the remaining coefficients:
+
+\begin{align*}
+    tr \left( A T^c \right) = b_c,
+\end{align*}
+
+where we again used the tracelessness of the $T^a$ and their normalisation. Therefore we can write the $i,j$-th entry of the matrix $A$ as
+
+\begin{align*}
+    {A_{i}}^{j} = \sum_{a=1}^{N_c^2 -1} {(T^a)_{k}}^{l} {A_{l}}^{k} {(T^a)_{i}}^{j} + \frac{tr \left( A \right)}{N_c} {\delta_{i}}^{j}.
+\end{align*}
+
+Using $tr \left( A \right) = tr \left( A id \right) = {A_{l}}^{k} {\delta_{k}}^{l}$ and ${A_{i}}^{j} = {A_{l}}^{k} {\delta_i}^l {\delta_j}^k$, we find
+
+\begin{align*}
+    {A_{l}}^{k} \left[ \sum_{a=1}^{N_c^2 -1} {(T^a)_k}^l {(T^a)_i}^j + \frac{1}{N_c} {\delta_k}^l {\delta_i}^j - {\delta_i}^l {\delta_j}^k \right] = 0,
+\end{align*}
+
+that holds for all ${A_{l}}^{k}$, which implies that the term is the square backets must be $0$.
+
+\end{proof}
+
+\begin{definition}[Normalisation]
+\label{def:normalisation}
+We define the normalisation of the generators as
+
+\begin{align}
+    tr (T^a T^b) = \delta^{ab}. \label{eq:normalisation}
+\end{align}
+
+This normalisation, though uncommon in literature, prevents later expressions from unnecessary $\sqrt{2}$ apprearing.
+
+\end{definition}
+
+On the other hand, the generators also satisfy the relation
+
+\begin{align}
+    [ T^a, T^b ] = i \sqrt{2} \sum_{c=1}^{N_c^2 - 1} f^{abc} T^c, \label{eq:liebracket}
+\end{align}
+
+where the $f^{abc}$ are anti-symmetric. The above relation can be solved for the $f^{abc}$: starting with equation \eqref{eq:liebracket} and multiplying from the right side with another $T^d$ and taking the trace, we obtain
+
+\begin{align}
+    tr (T^a T^b T^d) - tr(T^b T^b T^d)  = i \sqrt{2} \sum_{c=1}^{N_c^2 - 1} f^{abc} tr (T^c T^d).
+\end{align}
+
+Using the definition of the normalisation \ref{def:normalisation}, the sum on the right hand side is over a Kronecker delta, therefore only one term is not vanishing
+
+\begin{align}
+    f^{abc} = -\frac{i}{\sqrt{2}} \left( tr (T^a T^b T^c) - tr(T^b T^b T^c) \right). \label{eq:fabc}
+\end{align}
+
+The expression for the structure constants \eqref{eq:fabc} can be written pictorially in a very intuitive way taking only color into account:
+
+\begin{equation}
+\begin{aligned}
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fabc1}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmftop{g2}
+            \fmfbottom{g1,g3}
+            \fmf{gluon}{g1,v}
+            \fmf{gluon}{g2,v}
+            \fmf{gluon}{g3,v}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &=&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fabc2}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmftop{g2}
+            \fmfbottom{g1,g3}
+            \fmf{gluon}{g1,v1}
+            \fmf{gluon}{g2,v2}
+            \fmf{gluon}{g3,v3}
+            \fmf{fermion,label=$i$,left=0.6,tension=0.7}{v1,v2}
+            \fmf{fermion,label=$j$,left=0.6,tension=0.7}{v2,v3}
+            \fmf{fermion,label=$k$,left=0.6,tension=0.7}{v3,v1}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &-&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fabc3}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmftop{g2}
+            \fmfbottom{g1,g3}
+            \fmf{gluon}{g1,v1}
+            \fmf{gluon}{g2,v2}
+            \fmf{gluon}{g3,v3}
+            \fmf{fermion,label=$i$,right=0.6,tension=0.7}{v2,v1}
+            \fmf{fermion,label=$j$,right=0.6,tension=0.7}{v3,v2}
+            \fmf{fermion,label=$k$,right=0.6,tension=0.7}{v1,v3}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}& \\
+    &i \sqrt{2} f^{abc}&
+    &=&
+    &{(T^a)_k}^{\bar{\imath}} {(T^b)_i}^{\bar{\jmath}} {(T^c)_j}^{\bar{k}} &
+    &-&
+    &{(T^a)_i}^{\bar{k}} {(T^b)_j}^{\bar{\imath}} {(T^c)_k}^{\bar{\jmath}}& \\
+    &i \sqrt{2} f^{abc}&
+    &=&
+    &tr ( T^a T^b T^c )&
+    &-&
+    &tr ( T^a T^c T^b ).& \label{eq:fd:fabc}
+\end{aligned}
+\end{equation}
+
+The structure constant $f^{abc}$ is proportional to the $3$-gluon vertex according to the Feynman rules (see appendix \ref{sec:frules}), whereas the loop diagrams on the right hand side produce traces of all involved generators $T^a$ using the Feynman rules for the quark-gloun vertices. The Fierz identity \eqref{eq:fierz2} can also be illustrated in a similar way:
+
+\begin{equation}
+\begin{aligned}
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fierz1}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,20)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{f1,f2}
+            \fmfright{f3,f4}
+            \fmf{fermion,right=0.4,tension=1.0}{f1,v1,f2}
+            \fmf{fermion,right=0.4,tension=1.0}{f4,v2,f3}
+            \fmf{gluon,label=$a$}{v1,v2}
+            \fmflabel{$i_1$}{f1}
+            \fmflabel{$\bar{\jmath}_1$}{f2}
+            \fmflabel{$\bar{\jmath}_2$}{f3}
+            \fmflabel{$i_2$}{f4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &=&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fierz2}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,20)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{f1,f2}
+            \fmfright{f3,f4}
+            \fmf{fermion}{f4,f2}
+            \fmf{fermion}{f1,f3}
+            \fmflabel{$i_1$}{f1}
+            \fmflabel{$\bar{\jmath}_1$}{f2}
+            \fmflabel{$\bar{\jmath}_2$}{f3}
+            \fmflabel{$i_2$}{f4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &-\frac{1}{N_c}&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_fierz3}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,20)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{f1,f2}
+            \fmfright{f3,f4}
+            \fmf{fermion,right=0.4,tension=1.0}{f1,v1,f2}
+            \fmf{fermion,right=0.4,tension=1.0}{f4,v2,f3}
+            \fmf{phantom}{v1,v2}
+            \fmflabel{$i_1$}{f1}
+            \fmflabel{$\bar{\jmath}_1$}{f2}
+            \fmflabel{$\bar{\jmath}_2$}{f3}
+            \fmflabel{$i_2$}{f4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}& \\
+    &{(T^a)_{i_1}}^{\bar{\jmath}_1} {(T^a)_{i_2}}^{\bar{\jmath}_2}&
+    &=&
+    &{\delta_{i_1}}^{\bar{\jmath}_2} {\delta_{i_2}}^{\bar{\jmath}_1}&
+    &-\frac{1}{N_c}&
+    &{\delta_{i_1}}^{\bar{\jmath}_1} {\delta_{i_2}}^{\bar{\jmath}_2}.& \label{eq:fd:fierz}
+\end{aligned}
+\end{equation}
+
+Again the Feynman rules from appendix \ref{sec:frules} where used to derive the pictures. The two equations can therfore be used to rewrite some guon interactions. Let's see this in an example.
+
+\begin{example}[$4$-gluon vertex]
+
+In this example, we decompose the $4$-gluon vertex into multiple diagrams. We use the two pictorial representations \eqref{eq:fd:fabc} and \eqref{eq:fd:fierz}. The $4$-vertex can be decomposed into $3$ components of each two $3$-vertices by just looking at the Feynman rule:
+
+\begin{equation}
+\begin{aligned}
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g1}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{1.5mm}
+            \fmfset{curly_len}{1.5mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v}
+            \fmf{gluon}{g2,v}
+            \fmf{gluon}{g3,v}
+            \fmf{gluon}{g4,v}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &=&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g2}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{1.5mm}
+            \fmfset{curly_len}{1.5mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v1}
+            \fmf{gluon}{g2,v1}
+            \fmf{gluon}{g3,v2}
+            \fmf{gluon}{g4,v2}
+            \fmf{gluon,label=$e$}{v2,v1}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &+&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g3}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{1.5mm}
+            \fmfset{curly_len}{1.5mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v2}
+            \fmf{gluon}{g2,v1}
+            \fmf{gluon}{g3,v1}
+            \fmf{gluon}{g4,v2}
+            \fmf{gluon,label=$e$}{v2,v1}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &+&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g4}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{1.5mm}
+            \fmfset{curly_len}{1.5mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v2}
+            \fmf{gluon}{g2,v1}
+            \fmf{phantom}{g4,v2}
+            \fmf{phantom}{g3,v1}
+            \fmf{gluon,tension=0}{g3,v2}
+            \fmf{gluon,tension=0}{g4,v1}
+            \fmf{gluon,label=$e$}{v1,v2}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}& \\
+    &&
+    &&
+    &f^{abe} f^{cde}&
+    &&
+    &f^{ade} f^{bce}&
+    &&
+    &f^{ace} f^{bde}.&
+\end{aligned}
+\end{equation}
+
+We decompose the vertex of the first diagram proportional to $f^{abe} f^{cde}$ (the others are analogue).
+
+\begin{align*}
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g5}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v1}
+            \fmf{gluon}{g2,v1}
+            \fmf{gluon}{g3,v2}
+            \fmf{gluon}{g4,v2}
+            \fmf{gluon,label=$e$}{v2,v1}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}&
+    &=&
+    &\begin{gathered}
+        \begin{fmffile}{report_diagram_example_4g6}
+        \fmfframe(0,10)(0,10){
+        \begin{fmfgraph*}(40,40)
+            \fmfstraight
+            \fmfset{arrow_len}{2mm}
+            \fmfset{curly_len}{2mm}
+            \fmfset{thin}{0.8pt}
+            \fmfpen{thin}
+            \fmfleft{g1,g2}
+            \fmfright{g4,g3}
+            \fmf{gluon}{g1,v1}
+            \fmf{gluon}{g2,v1}
+            \fmf{gluon}{g3,v2}
+            \fmf{gluon}{g4,v2}
+            \fmf{gluon,label=$e$}{v2,v1}
+            \fmflabel{$a$}{g1}
+            \fmflabel{$b$}{g2}
+            \fmflabel{$c$}{g3}
+            \fmflabel{$d$}{g4}
+        \end{fmfgraph*}
+        }
+        \end{fmffile}
+    \end{gathered}& \\
+    & & &=& &d&
+\end{align*}
+
+
+\end{example}
+
+\section{Parke Taylor formula}
+
+\begin{equation}
+    \begin{split}
+        J^{\mu}(1, \dots , n) &= \frac{-i}{P_{1,n}^2} \Biggl[ \sum_{i=1}^{n-1} V_3^{\mu \nu \rho}(P_{1,i}, P_{i+1,n}) J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots , n) \\
+        &+ \sum_{i=1}^{n-2} \sum_{j=i+1}^{n-1} V_4^{\mu \nu \rho \sigma} J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots, j)J_{\sigma}(j+1, \dots, n) \Biggr] \label{eq:recursion}
+    \end{split}
+\end{equation}
+
+where the $V_i$ are the colour ordered gluon self interaction vertices,
+
+\begin{align}
+    V_3^{\mu \nu \rho}(P, Q) &= \frac{i}{\sqrt{2}} \left( \eta^{\nu \rho}\left( P - Q \right)^{\mu} + 2 \eta^{\rho \mu} Q^{\nu} - 2 \eta^{\mu \nu} P^{\rho}  \right), \\
+    V_4^{\mu \nu \rho \sigma} &= \frac{i}{2} \left( 2 \eta^{\mu \rho} \eta^{\nu \sigma} - \eta^{\mu \nu} \eta^{\rho \sigma} - \eta^{\mu \sigma} \eta^{\nu \rho}  \right),
+\end{align}
+
+and the currents with only one gluon are the corresponding polarisation vectors
+
+\begin{subequations}
+    \begin{align}
+        &J^{\mu}(i^{+}) = \varepsilon_{+}^{\mu}(p_i,q_i) = \frac{1}{\sqrt{2}} \frac{ \langle q_i | \sigma^{\mu} | p_i \rbrack }{ \langle q_i p_i \rangle }, 
+        &J_{\mu}(i^{+}) = \varepsilon_{+\mu}(p_i,q_i) = \frac{1}{\sqrt{2}} \frac{ \langle q_i | \sigma_{\mu} | p_i \rbrack }{ \langle q_i p_i \rangle }, \\
+        &J^{\mu}(i^{-}) = \varepsilon_{-}^{\mu}(p_i,q_i) = - \frac{1}{\sqrt{2}} \frac{ \lbrack q_i | \overline{\sigma}^{\mu} | p_i \rangle }{ \lbrack q_i p_i \rbrack }, 
+        &J_{\mu}(i^{-}) = \varepsilon_{-\mu}(p_i,q_i) = - \frac{1}{\sqrt{2}} \frac{ \lbrack q_i | \overline{\sigma}_{\mu} | p_i \rangle }{ \lbrack q_i p_i \rbrack }.
+    \end{align}
+\end{subequations}
+
+\begin{prop}
+\label{prop:Jppp}
+
+    If the helicities of all participating gluons are equal, then equation \eqref{eq:recursion} reduces to the following form \cite{dixon1996}:
+
+    \begin{align}
+        J^{\mu}(1^{+}, 2^{+}, \dots , n^{+}) = \frac{ \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q} }{ \sqrt{2} \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \label{eq:prop1}.
+    \end{align}
+
+    where the reference momentum $q$ is the same for all gluons.
+
+\end{prop}
+
+\begin{proof}
+
+    The proof is given by induction. We begin with the base case $n=2$:
+
+    \begin{align*}
+        J^{\mu}(1^{+}, 2^{+}) &= \frac{-i}{P_{1,2}^2} V_3^{\mu \nu \rho}(P_{1,1}, P_{2,2}) J_{\nu}(1^{+}) J_{\rho}(2^{+}) \\
+        &= \frac{-i}{P_{1,2}^2} \frac{i}{\sqrt{2}} \left( \eta^{\nu \rho} \left( p_1 - p_2 \right)^{\mu} + 2 \eta^{\rho \mu} p_2^{\nu} - 2 \eta^{\mu \nu} p_1^{\rho}  \right) \frac{1}{\sqrt{2}} \frac{ \langle q | \sigma_{\nu} | 1 \rbrack }{ \langle q 1 \rangle } \frac{1}{\sqrt{2}} \frac{ \langle q | \sigma_{\rho} | 2 \rbrack }{ \langle q 2 \rangle } \\
+        &= \frac{-i}{P_{1,2}^2} \frac{i}{\sqrt{2}} \left( \eta^{\nu \rho} \left( p_1 - p_2 \right)^{\mu} + 2 \eta^{\rho \mu} p_2^{\nu} - 2 \eta^{\mu \nu} p_1^{\rho}  \right) \varepsilon_{+\nu}(p_1,q) \varepsilon_{+\rho}(p_2,q)
+    \end{align*}
+
+    We will obtain 3 terms. The first one will vanish, after applying the Fierz identity \eqref{eq:fierz}, since $\langle qq \rangle = \lbrack qq \rbrack = 0$,
+
+    \begin{align*}
+        \varepsilon_{+}(p_1,q) \cdot \varepsilon_{+}(p_2,q) \left( p_1 - p_2 \right)^{\mu}
+        &= \frac{1}{2} \frac{\langle q | \sigma^{\rho} | 1 \rbrack \langle q | \sigma_{\rho} | 2 \rbrack }{\langle q 1 \rangle \langle q 2 \rangle} \left( p_1 - p_2 \right)^{\mu} \\
+        &= \frac{\langle qq \rangle \lbrack 12 \rbrack}{\langle q 1 \rangle \langle q 2 \rangle} \left( p_1 - p_2 \right)^{\mu} \\
+        &= 0.
+    \end{align*}
+
+    The second term evaluates to
+
+    \begin{align*}
+        2 \varepsilon_{+}^{\mu}(p_2,q) \; p_2 \cdot \varepsilon_{+}(p_1,q) &= 2 \frac{1}{\sqrt{2}} \frac{ \langle q | \sigma^{\mu} | 2 \rbrack }{ \langle q2 \rangle } \frac{1}{\sqrt{2}} \frac{ p_2^{\nu} \langle q | \sigma_{\nu} | 1 \rbrack }{ \langle q1 \rangle } \\
+        &= \frac{\langle q | \sigma^{\mu} | 2 \rbrack}{\langle q1 \rangle \langle q2 \rangle} \frac{1}{2} \langle 2 | \sigma^{\nu} | 2 \rbrack \langle q | \sigma_{\nu} | 1 \rbrack \\
+        &= \frac{\langle q | \sigma^{\mu} | 2 \rbrack}{\langle q1 \rangle \langle q2 \rangle} \langle 2q \rangle \lbrack 12 \rbrack \\
+        &= \frac{\langle q | \sigma^{\mu} | 2 \rbrack \langle 2q \rangle}{\langle q1 \rangle \langle q2 \rangle} \frac{ P_{1,2}^2 }{ \langle 21 \rangle } \\
+        &= \frac{\langle q | \sigma^{\mu} \slashed{p}_2 | q \rangle P_{1,2}^2}{\langle q1 \rangle \langle 12 \rangle \langle 2q \rangle}.
+    \end{align*}
+
+    Using this result for the third term gives (exchanging $1$ and $2$ and adding an overall minus)
+
+    \begin{align*}
+        - 2 \varepsilon_{+}^{\mu}(p_1,q) \; p_1 \cdot \varepsilon_{+}(p_2,q) &= -\frac{\langle q | \sigma^{\mu} \slashed{p}_1 | q \rangle P_{1,2}^2}{\langle q2 \rangle \langle 21 \rangle \langle 1q \rangle} \\
+        &= \frac{\langle q | \sigma^{\mu} \slashed{p}_1 | q \rangle P_{1,2}^2}{\langle q1 \rangle \langle 12 \rangle \langle 2q \rangle}.
+    \end{align*}
+
+    Therefore the whole term evaluates to
+
+    \begin{align*}
+        J^{\mu}(1^{+}, 2^{+}) &= \frac{ \langle q | \sigma^{\mu} \slashed{P}_{1,2} | q \rangle }{ \sqrt{2} \langle q1 \rangle \langle 12 \rangle \langle 2q \rangle },
+    \end{align*}
+
+    which equals equation \eqref{eq:prop1} for $n=2$.
+
+    Now, we perform the induction step. Assuming that the proposition holds for $k \leq n-1$, we want to find $J^{\mu}(1^{+}, 2^{+}, \dots , n^{+})$. The $V_4$ term vanishes, because of
+
+    \begin{align*}
+        \eta^{\nu \sigma} J_{\nu}(1, \dots, i) J_{\sigma}(j+1, \dots, n)
+        &\propto \eta^{\nu \sigma} \bra{q} \sigma_{\nu} \slashed{P}_{1,i} \ket{q} \bra{q} \sigma_{\sigma} \slashed{P}_{j+1,n} \ket{q} \\
+        &= \bra{q} \sigma^{\sigma} \slashed{P}_{1,i} \ket{q} \bra{q} \sigma_{\sigma} \slashed{P}_{j+1,n} \ket{q} \\
+        &\propto  \langle qq \rangle \\
+        &= 0.
+    \end{align*}
+
+    The same argument also applies to $\eta^{\rho \sigma} J_{\rho}(i+1, \dots, j) J_{\sigma}(j+1, \dots, n) = 0$ and $\eta^{\nu \rho} J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots, j) = 0$. Thus the whole $V_4$ term evaluates to zero. The first term in $V_3$ also vanishes, because of the same argument, $\eta^{\nu \rho} J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots , n) = 0$. We are left with only the two remaining $V_3$ terms,
+
+    \begin{align*}
+        J^{\mu}(1^{+}, 2^{+}, \dots , n^{+}) &= \frac{-i}{P_{1,n}^2} \sum_{i=1}^{n-1} V_3^{\mu \nu \rho}(P_{1,i}, P_{i+1,n}) J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots , n) \\
+        &= \frac{\sqrt{2}}{P_{1,n}^2} \sum_{i=1}^{n-1} \left( \eta^{\rho \mu} P_{i+1,n}^{\nu} - \eta^{\mu \nu} P_{1,i}^{\rho}  \right) J_{\nu}(1, \dots, i) J_{\rho}(i+1, \dots , n).
+    \end{align*}
+
+    By assumption, equation \eqref{eq:prop1} holds for values smaller than or equal to $n-1$, hence we can substitute equation \eqref{eq:prop1} for $J_{\nu}$ and $J_{\rho}$,
+
+    \begin{align*}
+        \frac{\sqrt{2}}{P_{1,n}^2} \sum_{i=1}^{n-1} &\left( \eta^{\rho \mu} P_{i+1,n}^{\nu} - \eta^{\mu \nu} P_{1,i}^{\rho}  \right) \frac{ \bra{q} \sigma_{\nu} \slashed{P}_{1,i} \ket{q} }{ \sqrt{2} \langle q1 \rangle \langle 12 \rangle \cdots \langle i-1,i \rangle \langle iq \rangle } \frac{ \bra{q} \sigma_{\rho} \slashed{P}_{i+1,n} \ket{q} }{ \sqrt{2} \langle q,i+1 \rangle  \cdots \langle n-1,n \rangle \langle nq \rangle } \\
+        = &\frac{1}{ \sqrt{2} P_{1,n}^2 \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \sum_{i=1}^{n-1} \frac{ \langle i,i+1 \rangle }{\langle iq \rangle \langle q,i+1 \rangle} \\
+        &\times \Bigl( \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,i} \ket{q} \bra{q} \sigma^{\mu} \slashed{P}_{i+1,n} \ket{q} - \bra{q} \sigma^{\mu} \slashed{P}_{1,i} \ket{q} \bra{q} \slashed{P}_{1,i} \slashed{P}_{i+1,n} \ket{q} \Bigr) \\
+        = &\frac{ \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q} }{ \sqrt{2} P_{1,n}^2 \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \sum_{i=1}^{n-1} \frac{ \langle i,i+1 \rangle }{\langle iq \rangle \langle q,i+1 \rangle} \\
+        &\times \Bigl( \bra{q} \sigma^{\mu} \slashed{P}_{i+1,n} \ket{q} \bra{q} \slashed{P}_{1,i} \slashed{P}_{i+1,n} \ket{q} - \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,i} \ket{q} \bra{q} \sigma^{\mu} \slashed{P}_{1,i} \ket{q} \Bigr)
+    \end{align*}
+
+    We use that $\slashed{a} \slashed{b} = 2 a b \mathbb{I} - \slashed{b} \slashed{a}$ and therefore $\bra{q} \slashed{P}_{1,i} \slashed{P}_{i+1,n} \ket{q} = - \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,i} \ket{q}$. We obtain
+
+    \begin{align*}
+    &\frac{ 1 }{ \sqrt{2} P_{1,n}^2 \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \sum_{i=1}^{n-1} \frac{ \langle i,i+1 \rangle }{\langle iq \rangle \langle q,i+1 \rangle} \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,i} \ket{q} \\
+    &\times \underbrace{\Bigl( \bra{q} \sigma^{\mu} \slashed{P}_{i+1,n} \ket{q} + \bra{q} \sigma^{\mu} \slashed{P}_{1,i} \ket{q} \Bigr).}_{
+        = \bra{q} \sigma^{\mu} \left( \slashed{P}_{i+1,n} + \slashed{P}_{1,i} \right) \ket{q} 
+        = \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q}
+    }
+    \end{align*}
+
+    Also
+
+    \begin{align*}
+        \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,i} \ket{q} &= \bra{q} \slashed{P}_{i+1,n} \left( \slashed{P}_{1,n} - \slashed{P}_{i+1,n} \right) \ket{q} \\
+        &= \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,n} \ket{q} - \bra{q} \slashed{P}_{i+1,n}^2 \ket{q} \\
+        &= \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,n} \ket{q} - \slashed{P}_{i+1,n}^2 \langle qq \rangle \\
+        &= \bra{q} \slashed{P}_{i+1,n} \slashed{P}_{1,n} \ket{q},
+    \end{align*}
+
+    where we have used $\slashed{p}\slashed{p} = p^2\mathbb{I}$. The term then simplifies to
+
+    \begin{align}
+        \frac{ \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q} }{ \sqrt{2} P_{1,n}^2 \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \left[ \sum_{i=1}^{n-1} \frac{ \langle i,i+1 \rangle }{\langle iq \rangle \langle q,i+1 \rangle} \bra{q} \slashed{P}_{i+1,n} \right] \slashed{P}_{1,n} \ket{q}. \label{eq:prop1:1}
+    \end{align}
+
+    The term in the square brackets can be simplified by the Shouten identity \eqref{eq:schouten}:
+
+    \begin{align}
+        \sum_{i=1}^{n-1} \frac{ \langle i,i+1 \rangle }{\langle iq \rangle \langle q,i+1 \rangle} \bra{q} \slashed{P}_{i+1,n} &= \sum_{i=1}^{n-1} \left[ \frac{- \langle i+1,q \rangle \bra{i} \slashed{P}_{i+1,n} }{\langle iq \rangle \langle q,i+1 \rangle} + \frac{- \langle qi \rangle \bra{i+1} \slashed{P}_{i+1,n}}{\langle iq \rangle \langle q,i+1 \rangle} \right] \\
+        &= \sum_{i=1}^{n-1} \left[ \frac{\bra{i} \slashed{P}_{i,n} }{\langle iq \rangle} - \frac{\bra{i+1} \slashed{P}_{i+1,n}}{\langle i+1,q \rangle} \right] \\
+        &= \frac{\bra{1} \slashed{P}_{1,n} }{\langle 1q \rangle} - \frac{\bra{n} \slashed{p}_{n} }{\langle nq \rangle} \\
+        &= \frac{\bra{1} \slashed{P}_{1,n} }{\langle 1q \rangle} \label{eq:helper}.
+    \end{align}
+
+    To remove the sum, we concluded that the second term in the sum always cancels with the first term of next summand. Thus, leaving only the first term with $i=1$ and the second term with $i=n-1$. Using this on equation \eqref{eq:prop1:1}, we get the desired formula \eqref{eq:prop1} for arbitrary $n$,
+
+    \begin{align*}
+        J^{\mu}(1^{+}, 2^{+}, \dots , n^{+}) &= \frac{ \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q} }{ \sqrt{2} P_{1,n}^2 \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle } \frac{\bra{1} \slashed{P}_{1,n}^2 \ket{q} }{\langle 1q \rangle} \\
+        &= \frac{ \bra{q} \sigma^{\mu} \slashed{P}_{1,n} \ket{q} }{ \sqrt{2} \langle q1 \rangle \langle 12 \rangle \cdots \langle n-1,n \rangle \langle nq \rangle }.
+    \end{align*}
+
+\end{proof}
+
+\begin{prop}
+\label{prop:Jmppp}
+
+    If only the helicity of the first gluon is negative and the rest are positive, then equation \eqref{eq:recursion} reduces to the following form \cite{dixon1996}:
+
+    \begin{align}
+        J^{\mu}(1^{-}, 2^{+}, \dots , n^{+}) = \frac{ \bra{1} \sigma^{\mu} \slashed{P}_{2,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n} \frac{ \bra{1} \slashed{p}_m \slashed{P}_{1,m} \ket{1} }{ P_{1,m-1}^2 P_{1,m}^2 } \label{eq:Jmppp},
+    \end{align}
+
+    where the reference momenta are $q_1 = p_2$ and $q_2 = \dots = q_n = p_1$. So the reference momenta for the gluons with same helicities are equal.
+
+\end{prop}
+
+\begin{proof}
+
+    The proof is given by induction. We begin with the case $n=2$ which will be needed for the base case $n=3$:
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}) &= \frac{-i}{P_{1,2}^2} V_3^{\mu \nu \rho}(P_{1,1}, P_{2,2}) J_{\nu}(1^{-}) J_{\rho}(2^{+}) \\
+        &= \frac{-i}{P_{1,2}^2} \frac{i}{\sqrt{2}} \left( \eta^{\nu \rho} \left( p_1 - p_2 \right)^{\mu}  + 2\eta^{\rho \mu}p_2^{\nu} -2\eta^{\mu \nu}p_1^{\rho} \right) \varepsilon_{-\nu}(p_1,p_2) \varepsilon_{+\rho}(p_2,p_1).
+    \end{align*}
+
+    The first term evaluates to zero after applying the Fierz identity,
+
+    \begin{align*}
+        \varepsilon_{-}^{\rho}(p_1,p_2) \varepsilon_{+\rho}(p_2,p_1) &= \frac{1}{\sqrt{2}} \frac{ \lbrack 2 | \overline{\sigma}^{\rho} | 1 \rangle }{ \lbrack 21 \rbrack } \frac{1}{\sqrt{2}} \frac{ \langle 1 | \sigma_{\rho} | 2 \rbrack }{ \langle 12 \rangle } \\
+        &= \frac{1}{2} \frac{ \langle 1 | \sigma^{\rho} | 2 \rbrack \langle 1 | \sigma_{\rho} | 2 \rbrack }{ \lbrack 21 \rbrack \langle 12 \rangle } \\
+        &= \frac{ \langle 11 \rangle \lbrack 22 \rbrack }{ \lbrack 21 \rbrack \langle 12 \rangle } = 0.
+    \end{align*}
+
+    The second and the third term also vanish,
+
+    \begin{align*}
+        p_2^{\nu} \varepsilon_{-\nu}(p_1,p_2) &= - \frac{1}{2} \langle 2 | \sigma^{\nu} | 2 \rbrack \frac{1}{\sqrt{2}} \frac{ \lbrack 2 | \overline{\sigma}_{\nu} | 1 \rangle }{ \lbrack 21 \rbrack } \\
+        &= - \frac{ \langle 21 \rangle \lbrack 22 \rbrack }{\sqrt{2} \lbrack 21 \rbrack } = 0.
+    \end{align*}
+
+    Therefore, we get
+
+    \begin{align}
+        J^{\mu}(1^{-}, 2^{+}) = 0. \label{eq:caseneq2}
+    \end{align}
+
+    Let's look at the $n=3$ case,
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}, 3^{+}) = \frac{-i}{P_{1,3}^2} \Biggl[ &V_3^{\mu \nu \rho}(P_{1,1}, P_{2,3}) J_{\nu}(1^{-}) J_{\rho}(2^{+}, 3^{+}) \\
+        &+V_3^{\mu \nu \rho}(P_{1,2}, P_{3,3}) J_{\nu}(1^{-}, 2^{+}) J_{\rho}(3^{+}) \\
+        &+V_4^{\mu \nu \rho \sigma} J_{\nu}(1^{-}) J_{\rho}(2^{+}) J_{\sigma}(3^{+}) \Biggr].
+    \end{align*}
+
+    The second $V_3$ term vanishes, because it is the $n=2$ case above. TODO: rest
+
+    Now, we perform the induction step:
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}, \dots , n^{+}) &= \frac{-i}{P_{1,n}^2} \Biggl[ \sum_{i=1}^{n-1} V_3^{\mu \nu \rho}(P_{1,i}, P_{i+1,n}) J_{\nu}(1^{-}, \dots, i^{+}) J_{\rho}((i+1)^{+}, \dots , n^{+}) \\
+        &+ \sum_{i=1}^{n-2} \sum_{j=i+1}^{n-1} V_4^{\mu \nu \rho \sigma} J_{\nu}(1^{-}, \dots, i^{+}) J_{\rho}((i+1)^{+}, \dots, j^{+})J_{\sigma}((j+1)^{+}, \dots, n^{+}) \Biggr]
+    \end{align*}
+
+    The first $V_3$ term and all of the $V_4$ terms vanish, due to the choice of reference momenta and Fierzing. In each term in the double sum of the $V_4$'s and in the first $V_3$ term, there appears a term proportional to
+
+    \begin{align*}
+        \eta^{\nu \sigma} \langle 1 | \sigma_{\nu} \slashed{P}_{i,j} | 1 \rangle \langle 1 | \sigma_{\sigma} \slashed{P}_{k,l} | 1 \rangle = - 2 \langle 11 \rangle \langle 1 | \slashed{P}_{k,l} \slashed{P}_{i,j} | 1 \rangle = 0,
+    \end{align*}
+
+    where $i \leq j,k \leq l$ are some indices. The sum over $i$ can actually be written as starting from $3$ rather than $1$, because the two cases $i=1$ and $i=2$, we will treat separately. Let's first examine $i=1$,
+
+    \begin{align*}
+        I_1 &= \frac{-i}{P_{1,n}^2} V_3^{\mu \nu \rho}(p_{1}, P_{2,n}) J_{\nu}(1^{-}) J_{\rho}(2^{+}, \dots , n^{+}) \\
+        &= - \frac{1}{\sqrt{2} P_{1,n}^2} \left( 2 \eta^{\rho \mu} P_{2,n}^{\nu} - 2 \eta^{\mu \nu} p_{1}^{\rho} \right) \frac{1}{\sqrt{2}} \frac{ \lbrack q_1 | \overline{\sigma}_{\nu} | 1 \rangle }{ \lbrack q_1,1 \rbrack } \frac{ \bra{1} \sigma_{\rho} \slashed{P}_{2,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \langle 23 \rangle \cdots \langle n-1,n \rangle \langle n1 \rangle } \\
+        &= - \frac{ \langle 1 | \slashed{P}_{2,n} | q_1 \rbrack \bra{1} \sigma^{\mu} \slashed{P}_{2,n} \ket{1} - \langle 1 | \sigma^{\mu} | q_1 \rbrack \bra{1} \slashed{p}_1 \slashed{P}_{2,n} \ket{1} }{ P_{1,n}^2 \sqrt{2} \lbrack q_1,1 \rbrack \langle 12 \rangle \cdots \langle n1 \rangle } \\
+        &= - \frac{ \langle 1 | \slashed{P}_{2,n} | q_1 \rbrack }{ \lbrack q_1,1 \rbrack P_{1,n}^2 } \frac{ \bra{1} \sigma^{\mu} \slashed{P}_{2,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle }.
+    \end{align*}
+
+    Using the spinor product \eqref{eq:ij} and the slash notation \eqref{eq:slash},
+
+    \begin{align*}
+        - \frac{ \langle 1 | \slashed{P}_{2,n} | q_1 \rbrack }{ \lbrack q_1,1 \rbrack P_{1,n}^2 } &= \frac{ \langle 1 | \slashed{P}_{2,n} | q_1 \rbrack \langle q_1,1 \rangle }{ \left( q_1 + p_1 \right)^2 P_{1,n}^2 } \\
+        &= \frac{ \langle 1 | \slashed{P}_{2,n} \slashed{q}_1 | 1 \rangle }{ \left( q_1 + p_1 \right)^2 P_{1,n}^2 }.
+    \end{align*}
+
+    The reference momentum $q_1$ was not chosen until now. By staring at this, we see that, if the reference momentum choice is $q_1 = P_{2,n-1}$, then this looks very similar to the $m=n$ term in the sum of equation \eqref{eq:Jmppp},
+
+    \begin{align*}
+        \frac{ \langle 1 | \slashed{P}_{2,n} \slashed{q}_1 | 1 \rangle }{ \left( q_1 + p_1 \right)^2 P_{1,n}^2 } &= \frac{ \langle 1 | \slashed{P}_{2,n} \slashed{P}_{2,n-1} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 } \\
+        &= \frac{ \langle 1 | \slashed{P}_{1,n} \slashed{P}_{1,n-1} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 } \\
+        &= - \frac{ \langle 1 | \slashed{P}_{1,n} \slashed{p}_{n} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 } \\
+        &= \frac{ \langle 1 | \slashed{p}_{n} \slashed{P}_{1,n} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 }.
+    \end{align*}
+
+    To summarize, the $i=1$ case:
+
+    \begin{align}
+        I_1 = \frac{ \bra{1} \sigma^{\mu} \slashed{P}_{1,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \frac{ \langle 1 | \slashed{p}_{n} \slashed{P}_{1,n} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 }. \label{eq:I1}
+    \end{align}
+
+    The case for $i=2$ vanishes, because of equation \eqref{eq:caseneq2},
+
+    \begin{align*}
+        I_2 = V_3^{\mu \nu \rho}(P_{1,2}, P_{3,n}) &J_{\nu}(1^{-}, 2^{+}) J_{\rho}(3^{+}, \dots , n^{+})  = 0.
+    \end{align*}
+
+    Back to the full term, we are left with the two terms in $V_3$, where the reference momentum for $J_{\sigma}$ is $p_1$ and the sum over $i$ omitting the $i=2$ case (the $i=1$ case is taken out in front of the sum),
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}, \dots , n^{+}) &= I_1 + \frac{-i}{P_{1,n}^2} \Biggl[ \sum_{i=3}^{n-1} \frac{i}{\sqrt{2}} \left( 2 \eta^{\rho \mu} P_{i+1,n}^{\nu} - 2 \eta^{\mu \nu} P_{1,i}^{\rho} \right) \\
+        &\times \left( \frac{ \langle 1 | \sigma_{\nu} \slashed{P}_{2,i} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle i1 \rangle } \sum_{m=3}^{i} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \right) \left( \frac{ \langle 1 | \sigma_{\rho} \slashed{P}_{i+1,n} | 1 \rangle }{ \sqrt{2} \langle 1,i+1 \rangle \cdots \langle n1 \rangle } \right) \Biggr] \\
+        &= I_1 + \frac{1}{P_{1,n}^2} \Biggl[ \sum_{i=3}^{n-1} \sum_{m=3}^{i} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \\
+        &\times \frac{ \langle 1 | \slashed{P}_{i+1,n} \slashed{P}_{1,i} | 1 \rangle \langle 1 | \sigma^{\mu} \slashed{P}_{i+1,n} | 1 \rangle - \langle 1 | \sigma^{\mu} \slashed{P}_{1,i} | 1 \rangle \langle 1 | \slashed{P}_{1,i} \slashed{P}_{i+1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle i1 \rangle \langle 1,i+1 \rangle \cdots \langle n1 \rangle } \Biggr].
+    \end{align*}
+
+
+    The two sums can be interchanged in the way illustrated by figure \ref{plt:sums}. We can therefore switch the two sums, according to
+
+    \begin{align*}
+        \sum_{i=3}^{n-1} \sum_{m=3}^{i} = \sum_{m=3}^{n-1} \sum_{i=m}^{n-1}.
+    \end{align*}
+
+    \begin{figure}[H]
+        \begin{center}
+            \begin{tikzpicture}
+
+                \begin{axis}[
+                    axis lines = left,
+                    xmin=1.5,
+                    xmax=10,
+                    ymin=1.5,
+                    ymax=10,
+                    xtick =       {2, 3, 4, 5, 6, 7.5, 9},
+                    xticklabels = {$i=$, $3$, $4$, $5$, $6$, $\cdots$, $n-1$},
+                    ytick =       {2, 3, 4, 5, 6, 7.5, 9},
+                    yticklabels = {\rotatebox{90}{$m=$}, \rotatebox{90}{$3$}, \rotatebox{90}{$4$}, \rotatebox{90}{$5$}, \rotatebox{90}{$6$}, $\vdots$, \rotatebox{90}{$n-1$}},
+                    scatter/classes={%
+                        a={mark=o,draw=black},
+                        h={mark=text,text mark={$\cdots$},draw=blue},
+                        v={mark=text,text mark={$\vdots$},draw=blue},
+                        d={mark=text,text mark={\reflectbox{$\ddots$}},draw=blue}
+                    }
+                ]
+
+                    \addplot[scatter,only marks,%
+                        scatter src=explicit symbolic]%
+                    table[meta=label] {
+                        x y label
+                        3 3 a
+                        4 3 a
+                        4 4 a
+                        5 3 a
+                        5 4 a
+                        5 5 a
+                        6 3 a
+                        6 4 a
+                        6 5 a
+                        6 6 a
+                        7.5 3 h
+                        7.5 4 h
+                        7.5 5 h
+                        7.5 6 h
+                        7.5 7.5 d
+                        9 3 a
+                        9 4 a
+                        9 5 a
+                        9 6 a
+                        9 7.5 v
+                        9 9 a
+                    };
+
+                \end{axis}
+            \end{tikzpicture}
+        \caption{From the two sums, we can see that if $i=3$, then $m$ takes values from $3$ to $i$, so $m$ can only be $3$. When $i$ increments to $i=4$, then $m$ can take values $3$ and $4$ and so on. For $i=n-1$, $m$ can take all values between $3$ to $n-1$. If we sum over $m$ before summing over $i$, we can read off the limits from the plot above. Namely $m$ starts at $3$ and go up to $n-1$, whereas $i$ always starts from $m$ and goes up to $n-1$.}
+        \label{plt:sums}
+        \end{center}
+    \end{figure}
+
+    The numerator can be simplyfied by using $\langle 1 | \slashed{P}_{1,i} \slashed{P}_{i+1,n} | 1 \rangle = - \langle 1 | \slashed{P}_{i+1,n} \slashed{P}_{1,i} | 1 \rangle$ and $\slashed{P}_{1,i} = \slashed{P}_{1,n} - \slashed{P}_{i+1,n}$, therefore $\langle 1 | \slashed{P}_{i+1,n} \slashed{P}_{1,i} | 1 \rangle = \langle 1 | \slashed{P}_{i+1,n} \slashed{P}_{1,n} | 1 \rangle$, where the right half is independent of $i$. The denominator can also be written as one part independent and one dependent of $i$,
+
+    \begin{align*}
+        \frac{ 1 }{ \langle 12 \rangle \cdots \langle i1 \rangle \langle 1,i+1 \rangle \cdots \langle n1 \rangle } = \frac{1}{ \langle 12 \rangle \cdots \langle n1 \rangle } \frac{ \langle i,i+1 \rangle }{ \langle i1 \rangle \langle 1,i+1 \rangle }.
+    \end{align*}
+
+    Pulling all terms indepenent on $i$ together out of the sum on $i$ and switching the sums, results in
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}, \dots , n^{+}) &= I_1 + \frac{1}{P_{1,n}^2} \Biggl[ \frac{ \langle 1 | \sigma^{\mu} \slashed{P}_{1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n-1} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \\
+        &\times \sum_{i=m}^{n-1} \frac{ \langle i,i+1 \rangle }{ \langle i1 \rangle \langle 1,i+1 \rangle } \langle 1 | \slashed{P}_{i+1,n} \slashed{P}_{1,n} | 1 \rangle \Biggr].
+    \end{align*}
+
+    We can evaluate the term in the second line that is dependent on $i$, which has appeared before in \eqref{eq:helper}, and inserting equation \eqref{eq:I1} for $I_1$, concluding the proof,
+
+    \begin{align*}
+        J^{\mu}(1^{-}, 2^{+}, \dots , n^{+}) &= I_1 + \frac{1}{P_{1,n}^2} \Biggl[ \frac{ \langle 1 | \sigma^{\mu} \slashed{P}_{1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n-1} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \\
+        &\times \frac{ \langle m | \slashed{P}_{1,n} }{ \langle m1 \rangle } \slashed{P}_{1,n} | 1 \rangle \Biggr] \\
+        &= I_1 + \frac{ \langle 1 | \sigma^{\mu} \slashed{P}_{1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n-1} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \\
+        &= \frac{ \bra{1} \sigma^{\mu} \slashed{P}_{1,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \frac{ \langle 1 | \slashed{p}_{n} \slashed{P}_{1,n} | 1 \rangle }{ P_{1,n-1}^2 P_{1,n}^2 } + \frac{ \langle 1 | \sigma^{\mu} \slashed{P}_{1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n-1} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 } \\
+        &= \frac{ \langle 1 | \sigma^{\mu} \slashed{P}_{1,n} | 1 \rangle }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n} \frac{ \langle 1 | \slashed{p}_m \slashed{P}_{1,m} | 1 \rangle }{ P_{1,m-1}^2 P_{1,m}^2 }.
+    \end{align*}
+
+\end{proof}
+
+\begin{theorem}[Parke Taylor \cite{pt86}]
+
+The tree-level amplitude for the first two gluons with negative helicity and the rest positive helicity can be written as
+
+\begin{align}
+    A_n^{tree}(1^{-}, 2^{-}, 3^{+}, \dots , n^{+}) = i \frac{\langle 12 \rangle^4}{\langle 12 \rangle \cdots \langle n1 \rangle}.
+\end{align}
+
+\end{theorem}
+
+\begin{proof}
+To obtain amplitudes out of off-shell currents $J_{\mu}$, we need to multiply the current by $i P_{1,n}^2$ and then contract it with an appropriate polarisation vector $\varepsilon^{\mu}$ which is on the mass-shell. Multiplication by $i P_{1,n}^2$ is needed, because the off-shell current is defined to include the propagator of external off-shell leg $\mu$. In this way we could also achieve amplitudes with external quarks, instead of gluons. However, we then have $p_{n+1}^2 = P_{1,n}^2 = 0$. Therefore, we begin with
+
+\begin{align}
+    A_n^{tree}(&1^{-}, 2^{+}, \dots , n^{+}, (n+1)^{-}) \\
+    &= i P_{1,n}^2 \varepsilon_{-}^{\mu}(p_{n+1}, q_{n+1}) J_{\mu}(1^{-}, 2^{+}, \dots , n^{+}) \\
+    &= - i P_{1,n}^2 \frac{1}{\sqrt{2}} \frac{ \lbrack q_{n+1} | \overline{\sigma}^{\mu} | p_{n+1} \rangle }{ \lbrack q_{n+1}, p_{n+1} \rbrack } \frac{ \bra{1} \sigma_{\mu} \slashed{P}_{2,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n} \frac{ \bra{1} \slashed{p}_m \slashed{P}_{1,m} \ket{1} }{ P_{1,m-1}^2 P_{1,m}^2 }
+\end{align}
+
+We used proposition \ref{prop:Jmppp} to express $J_{\mu}$. The $\slashed{P}_{2,n} \ket{1}$ in the middle term, can actually the written as $\slashed{P}_{1,n} \ket{1}$ because the $\ket{i}$ are solutions to the massless Dirac equation, $\slashed{p} \ket{p} = 0$. We can also use \eqref{eq:ijji} switch $q$ and $p$ in the numerator of the polarisation vector. Since $P_{1,n}^2 = 0$, all terms in the sum vanish except when $m=n$ - in this case $P_{1,n}^2$ is cancelled from the denominator.
+
+Next, we evaluate
+
+\begin{align}
+    \slashed{P}_{1,n} \ket{1} &= - \slashed{p}_{n+1} \ket{1} \label{eq:slashed1} \\
+    &= - \left( | n+1 \rangle \lbrack n+1 | + | n+1 \rbrack \langle n+1 | \right) \ket{1} \label{eq:slashed2} \\
+    &= - | n+1 \rbrack \langle n+1,1 \rangle \label{eq:slashed3} \\
+    &= | n+1 \rbrack \langle 1,n+1 \rangle, \label{eq:slashed4}
+\end{align}
+
+where we have used momentum conservation in the first step \eqref{eq:slashed1}. From \eqref{eq:slashed1} to \eqref{eq:slashed2} definition \eqref{eq:slash} was inserted. In the last step, we used the antisymmetry of the spinor product. In the sum we have ($m=n$),
+
+\begin{align}
+    \slashed{p}_n \slashed{P}_{1,n} \ket{1} &= \slashed{p}_n | n+1 \rbrack \langle 1,n+1 \rangle \\
+    &= \left( | n \rangle \lbrack n | + | n \rbrack \langle n | \right) | n+1 \rbrack \langle 1,n+1 \rangle \\
+    &= | n \rangle \lbrack n,n+1 \rbrack \langle 1,n+1 \rangle,
+\end{align}
+
+in an analogous way as before. Using these equations, we obtain (writing $\ket{p_i}$ as $\ket{i}$)
+
+\begin{align}
+    A_n^{tree}(&1^{-}, 2^{+}, \dots , n^{+}, (n+1)^{-}) \\
+    &= -i \frac{1}{2} \frac{\langle n+1 | \sigma^{\mu} | q_{n+1} \rbrack }{\lbrack q_{n+1},n+1 \rbrack } \frac{ \langle 1 | \sigma_{\mu} | n+1 \rbrack \langle 1,n+1 \rangle }{ \langle 12 \rangle \cdots \langle n1 \rangle} \frac{ \langle 1n \rangle \lbrack n,n+1 \rbrack \langle 1,n+1 \rangle }{ P_{1,n-1}^2 } \label{eq:A_n_tree}.
+\end{align}
+
+We have momentum conservation, therfore
+
+\begin{align}
+    P_{1,n-1} = - P_{n,n+1} \implies P_{1,n-1}^2 &= P_{n,n+1}^2 \\
+    &= \left( p_n + p_{n+1} \right)^2 \\
+    &= s_{n,n+1} \\
+    &= \langle n,n+1 \rangle \lbrack n+1,n \rbrack,
+\end{align}
+
+where we have used \eqref{eq:ij} in the last step. Applying the Fierz identity \eqref{eq:fierz} to \eqref{eq:A_n_tree}, we finally get
+
+\begin{align}
+    A_n^{tree}(&1^{-}, 2^{+}, \dots , n^{+}, (n+1)^{-}) \\
+    &= -i \frac{ \langle n+1,1 \rangle \lbrack n+1,q_{n+1} \rbrack \langle 1,n+1 \rangle }{ \lbrack q_{n+1},n+1 \rbrack \langle 12 \rangle \cdots \langle n1 \rangle} \frac{ \langle 1n \rangle \lbrack n,n+1 \rbrack \langle 1,n+1 \rangle }{ \langle n,n+1 \rangle \lbrack n+1,n \rbrack } \\
+    &= -i \frac{ - \langle 1,n+1 \rangle \lbrack n+1,q_{n+1} \rbrack \langle 1,n+1 \rangle }{ - \lbrack n+1,q_{n+1} \rbrack \langle 12 \rangle \cdots \langle n1 \rangle} \frac{ - \langle n1 \rangle \lbrack n,n+1 \rbrack \langle 1,n+1 \rangle }{ - \langle n,n+1 \rangle \lbrack n,n+1 \rbrack } \\
+    &= -i \frac{ \langle 1,n+1 \rangle^3 }{ \langle 12 \rangle \cdots \langle n,n+1 \rangle } \frac{ - \langle 1,n+1 \rangle }{ \langle n+1,1 \rangle } \\
+    &= i \frac{ \langle 1,n+1 \rangle^4 }{ \langle 12 \rangle \cdots \langle n+1,1 \rangle }.
+\end{align}
+
+In the last step we multiplied by $1$ to get the desired structure of the Parke Taylor formula. Notice that gluons with negative helicities, $1$ and $n+1$, are adjacent. The formula for $n$ gluons can therefore also be written as
+
+\begin{align}
+    A_n^{tree}(&1^{-}, 2^{-}, 3^{+}, \dots , n^{+}) = i \frac{ \langle 12 \rangle^4 }{ \langle 12 \rangle \cdots \langle n1 \rangle },
+\end{align}
+
+by relabelling the momenta.
+
+\end{proof}
+
+Notice that, the general Parke Taylor formula reads
+
+\begin{align}
+    A_n^{tree}(&1^{+}, \dots, j^{-}, \dots k^{-}, \dots, n^{+}) = i \frac{ \langle jk \rangle^4 }{ \langle 12 \rangle \cdots \langle n1 \rangle },
+\end{align}
+
+where $j$ and $k$ may not be adjacent.  
+
+\section{Implementation}
+
+TODO
+
+\section{Summary}
+
+TODO
+
+\newpage
+
+\bibliography{references}
+\bibliographystyle{apalike}
+
+\newpage
+
+\appendix
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+
+\subsection{QCD Feynman rules}
+\label{sec:frules}
+
+\end{document}

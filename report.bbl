@@ -1,0 +1,52 @@
+\begin{thebibliography}{}
+
+\bibitem[Berends and Giele, 1987]{bg87colorordering}
+Berends, F.~A. and Giele, W. (1987).
+\newblock The six-gluon process as an example of weyl-van der waerden spinor
+  calculus.
+\newblock {\em Nuclear Physics B}, 294:700--732.
+
+\bibitem[Berends and Giele, 1988]{bg88recursive}
+Berends, F.~A. and Giele, W. (1988).
+\newblock Recursive calculations for processes with n gluons.
+\newblock {\em Nuclear Physics B}, 306(4):759--808.
+
+\bibitem[Berends et~al., 1981]{berends81}
+Berends, F.~A., Kleiss, R., De~Causmaecker, P., Gastmans, R., and Wu, T.~T.
+  (1981).
+\newblock Single bremsstrahlung processes in gauge theories.
+\newblock {\em Physics Letters B}, 103(2):124--128.
+
+\bibitem[Dixon, 1996]{dixon1996}
+Dixon, L. (1996).
+\newblock Calculating scattering amplitudes efficiently.
+\newblock {\em arXiv preprint hep-ph/9601359}.
+
+\bibitem[Gruber, 2019]{github}
+Gruber, R. (2019).
+\newblock Github repository: Source code of the implementation.
+\newblock \url{http://github.com/chaoos/report-proseminar-hs2019}.
+\newblock Accessed: 2019-12-03.
+
+\bibitem[Lehmann et~al., 1955]{lsz55}
+Lehmann, H., Symanzik, K., and Zimmermann, W. (1955).
+\newblock Zur formulierung quantisierter feldtheorien.
+\newblock {\em Il Nuovo Cimento (1955-1965)}, 1(1):205--225.
+
+\bibitem[Mangano, 1999]{mangano99}
+Mangano, M.~L. (1999).
+\newblock Introduction to qcd.
+\newblock Technical report, CERN.
+
+\bibitem[Parke and Taylor, 1986]{pt86}
+Parke, S.~J. and Taylor, T.~R. (1986).
+\newblock Amplitude for $n$-gluon scattering.
+\newblock {\em Phys. Rev. Lett.}, 56:2459--2460.
+
+\bibitem[Xu et~al., 1987]{xu86}
+Xu, Z., Zhang, D.-H., and Chang, L. (1987).
+\newblock {Helicity Amplitudes for Multiple Bremsstrahlung in Massless
+  Nonabelian Gauge Theories}.
+\newblock {\em Nucl. Phys.}, B291:392--428.
+
+\end{thebibliography}

@@ -1,0 +1,29 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  17 NOV 2019 22:55
+**diagram_sum_on_3vertices.mf
+(diagram_sum_on_3vertices.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+feynmf: warning: dangling vertex `gu1' colliding with `vu'.
+feynmf: warning: dangling vertex `gu2' colliding with `vu'.
+feynmf: warning: dangling vertex `phu1' colliding with `vu'.
+feynmf: warning: dangling vertex `guin' colliding with `vu'.
+feynmf: warning: dangling vertex `gui' colliding with `vu'.
+feynmf: warning: dangling vertex `gd1' colliding with `vd'.
+feynmf: warning: dangling vertex `gd2' colliding with `vd'.
+feynmf: warning: dangling vertex `phd1' colliding with `vd'.
+feynmf: warning: dangling vertex `gdnm' colliding with `vd'.
+feynmf: warning: dangling vertex `gdn' colliding with `vd'.
+feynmf: Have you seen the warning messages above?
+        They are usually caused by misspelling a vertex'
+        name and can trigger errors further below!
+        Fix the typos and run LaTeX and Metafont again.
+:1:\fmfL(65.99962,29.9998,l){$V_3$}%
+:1:\fmfL(59.99901,29.9995,c){$J^{\mu }$}%
+:1:\fmfL(59.99985,29.99992,c){$J^{\mu }$}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 698 strings out of 5274
+ 7999 string characters out of 69975
+ 50323 words of memory out of 5000000
+ 1396 symbolic tokens out of 9500
+ 13i,67n,4r,26p,153b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on diagram_sum_on_3vertices.2602gf (1 character, 3616 bytes).

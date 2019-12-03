@@ -1,0 +1,5 @@
+% diagram_fermion_prop.t1 -- generated automatically from diagram_fermion_prop.log
+% Think twice before editing THIS file!
+\fmfL(10,18.5,b){$p$}
+\fmfL(26,12.5,l){$f^{\prime },j$}
+\fmfL(-6,12.5,r){$f,i$}

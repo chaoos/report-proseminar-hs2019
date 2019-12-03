@@ -1,0 +1,29 @@
+!#/bin/bash
+
+if [ "$1" = "all" ]; then
+  feynmf presentation.tex
+  ls diagram*.mf | xargs -n1 mf
+fi
+
+if [ "$1" = "fd" ]; then
+  feynmf presentation.tex
+  ls diagram*.mf | xargs -n1 mf
+fi
+
+if [ "$1" = "all" ]; then
+  pdflatex -halt-on-error presentation.tex
+  bibtex presentation
+  pdflatex -halt-on-error presentation.tex
+  pdflatex -halt-on-error presentation.tex
+fi
+
+if [ "$1" = "bib" ]; then
+  pdflatex -halt-on-error presentation.tex
+  bibtex presentation
+  pdflatex -halt-on-error presentation.tex
+  pdflatex -halt-on-error presentation.tex
+fi
+
+if [ "$1" = "" ]; then
+  pdflatex -halt-on-error presentation.tex
+fi

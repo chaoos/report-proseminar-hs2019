@@ -1,0 +1,5 @@
+% diagram_3gluon_vertex.t1 -- generated automatically from diagram_3gluon_vertex.log
+% Think twice before editing THIS file!
+\fmfL(-6,15,r){$k,a,\mu $}
+\fmfL(34.24265,-4.24265,lt){$q,c,\rho $}
+\fmfL(34.24265,34.24265,lb){$p,b,\nu $}

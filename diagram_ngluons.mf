@@ -1,0 +1,37 @@
+% diagram_ngluons.mf -- do not edit, generated automatically by presentation.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 60*1.0pt#, 60*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+save arrow_len; arrow_len:=2mm;
+save curly_len; curly_len:=2mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vsurround (__ph1, __g2, __g1, __ph2, __gi, __ph3, __gn, __gnm);
+vconnect ("gluon", __gi, __v);
+vconnect ("gluon", __v, __g1);
+vconnect ("gluon", __v, __g2);
+vconnect ("phantom", __v, __ph1);
+vconnect ("phantom", __v, __ph2);
+vconnect ("phantom", __v, __ph3);
+vconnect ("gluon", __v, __gnm);
+vconnect ("gluon", __v, __gn);
+vlabel ("$\mu $", __gi);
+vlabel ("$1$", __g1);
+vlabel ("$2$", __g2);
+vlabel ("$n$", __gn);
+vlabel ("$n-1$", __gnm);
+vlabel ("$\vdots $", __ph1);
+vblob ((.15w), __v);
+vvertex ("decoration.shape=circle,decoration.filled=empty,decoration.size=.25w,label=$J^{\mu }$,label.dist=0", __v);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;

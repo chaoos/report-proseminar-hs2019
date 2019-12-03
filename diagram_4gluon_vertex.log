@@ -1,0 +1,16 @@
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  2 DEC 2019 17:45
+**diagram_4gluon_vertex.mf
+(diagram_4gluon_vertex.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
+feynmf: 1
+:1:\fmfL(-4.24265,-4.24265,rt){$d,\sigma $}%
+:1:\fmfL(-4.24265,34.24265,rb){$a,\mu $}%
+:1:\fmfL(34.24265,-4.24265,lt){$c,\rho $}%
+:1:\fmfL(34.24265,34.24265,lb){$b,\nu $}% [1] ) 
+Here is how much of METAFONT's memory you used:
+ 624 strings out of 5274
+ 7359 string characters out of 69975
+ 55149 words of memory out of 5000000
+ 1378 symbolic tokens out of 9500
+ 13i,67n,56r,26p,118b stack positions out of 300i,300n,1000r,150p,200000b
+
+Output written on diagram_4gluon_vertex.2602gf (1 character, 17928 bytes).

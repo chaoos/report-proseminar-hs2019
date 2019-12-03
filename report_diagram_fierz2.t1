@@ -1,0 +1,6 @@
+% report_diagram_fierz2.t1 -- generated automatically from report_diagram_fierz2.log
+% Think twice before editing THIS file!
+\fmfL(-5.36655,-2.68332,rt){$i_1$}
+\fmfL(-5.36655,22.68332,rb){$\bar {\jmath }_1$}
+\fmfL(45.36655,-2.68332,lt){$\bar {\jmath }_2$}
+\fmfL(45.36655,22.68332,lb){$i_2$}

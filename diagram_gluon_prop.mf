@@ -1,0 +1,26 @@
+% diagram_gluon_prop.mf -- do not edit, generated automatically by report.tex
+input feynmf
+require_RCS_revision "1.30";
+beginchar(1, 20*1.0pt#, 25*1.0pt#, 0);
+"feynmf: 1";
+LaTeX_unitlength:=1.0pt;
+subgraph (0, 0, w, h);
+vinit;
+pickup pencircle scaled thin;
+straight_galleries;
+save arrow_len; arrow_len:=2mm;
+save curly_len; curly_len:=2mm;
+save thin; thin:=0.8pt;
+pickup pencircle scaled thin;
+vright (__g1);
+vleft (__g2);
+vconnect ("gluon,label=$p$", __g2, __g1);
+vlabel ("$a,\mu $", __g2);
+vlabel ("$b,\nu $", __g1);
+vfreeze;
+vdraw;
+endsubgraph;
+endchar;
+% the end.
+end.
+endinput;
