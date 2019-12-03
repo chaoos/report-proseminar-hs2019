@@ -38,10 +38,29 @@ Mangano, M.~L. (1999).
 \newblock Introduction to qcd.
 \newblock Technical report, CERN.
 
+\bibitem[Oliphant, 06  ]{numpy}
+Oliphant, T. (2006--).
+\newblock {NumPy}: A guide to {NumPy}.
+\newblock USA: Trelgol Publishing.
+\newblock [Online; accessed 2019-12-03].
+
 \bibitem[Parke and Taylor, 1986]{pt86}
 Parke, S.~J. and Taylor, T.~R. (1986).
 \newblock Amplitude for $n$-gluon scattering.
 \newblock {\em Phys. Rev. Lett.}, 56:2459--2460.
+
+\bibitem[{Virtanen} et~al., 2019]{scipy}
+{Virtanen}, P., {Gommers}, R., {Oliphant}, T.~E., {Haberland}, M., {Reddy}, T.,
+  {Cournapeau}, D., {Burovski}, E., {Peterson}, P., {Weckesser}, W., {Bright},
+  J., {van der Walt}, S.~J., {Brett}, M., {Wilson}, J., {Jarrod Millman}, K.,
+  {Mayorov}, N., {Nelson}, A. R.~J., {Jones}, E., {Kern}, R., {Larson}, E.,
+  {Carey}, C., {Polat}, {\.I}., {Feng}, Y., {Moore}, E.~W., {Vand erPlas}, J.,
+  {Laxalde}, D., {Perktold}, J., {Cimrman}, R., {Henriksen}, I., {Quintero},
+  E.~A., {Harris}, C.~R., {Archibald}, A.~M., {Ribeiro}, A.~H., {Pedregosa},
+  F., {van Mulbregt}, P., and {Contributors}, S. .~. (2019).
+\newblock {SciPy 1.0--Fundamental Algorithms for Scientific Computing in
+  Python}.
+\newblock {\em arXiv e-prints}, page arXiv:1907.10121.
 
 \bibitem[Xu et~al., 1987]{xu86}
 Xu, Z., Zhang, D.-H., and Chang, L. (1987).

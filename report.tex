@@ -13,6 +13,36 @@
 \usepackage{slashed} % Feynman slash notation
 \usepackage{pgfplots}
 \usepackage{feynmf} % for feynman diagrams
+\usepackage{listings} % for code listings
+\usepackage{xcolor}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codeblue}{rgb}{0.4,0.84,0.93}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "codestyle"
+\lstdefinestyle{codestyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codeblue},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=codestyle}
 
 \newcommand{\eqname}[1]{\tag*{#1}}% Tag equation with name
 \newcommand{\qwdots}{\ar@{.}[]+<-1em,0em>;[]+<0em,0em>}
@@ -46,6 +76,8 @@
  right=29mm,
  top=20mm,
  }
+
+\def\code#1{\texttt{#1}}
 
 \title{Proseminar on Computational Methods in QFT \\ Berends Giele Recursion \\ Report}
 \author{Roman Gruber}
@@ -1302,7 +1334,62 @@ where $j$ and $k$ may not be adjacent.
 
 \section{Implementation}
 
-TODO
+The implementation was done in Python using various helper classes from the libraries NumPy \cite{numpy} and SciPy \cite{scipy}.
+
+\subsection{Conventions}
+
+I defined 4-vectors with their index up $v^{\mu}$ as row vectors. This corresponds to two dimensional arrays of the form \code{[[$\code{v}^{\code{0}}$, $\code{v}^{\code{1}}$, $\code{v}^{\code{2}}$, $\code{v}^{\code{3}}$]]}. On the other hand, 4-vectors with their index down $w_{\mu}$ are defined as column vectors and two dimensional arrays of the form \code{[[$\code{w}^{\code{0}}$], [$\code{w}^{\code{1}}$], [$\code{w}^{\code{2}}$], [$\code{w}^{\code{3}}$]]}. Using this convention, I can simply perform a dot product between these vectors to obtain a contraction of two indicies.
+
+Since function names in Python can only consist of alphanumeric characters and underscores \code{\_}, I used for variables with their index down $v_{\mu}$ names as \code{v\_mu} and with index up $w^{\mu}$ names of the form \code{w\_\_mu}, such that $v^{\mu} w_{\mu}$ equals \code{v\_\_mu.dot(w\_mu)}.
+
+\subsection{Particle class}
+
+\begin{lstlisting}[language=Python, caption=Particle class definiton]
+class Particle:
+    # Class representing a single particle.
+    #
+    # @param Particle self      reference to the class instance
+    # @param int h              the helicity, defaults to +1
+    # @param array p            the 4-momentum
+    # @param array q            the 4-momentum reference vector
+    # @return Particle          class instance
+    #
+    def __init__ (self,
+            # default values
+            h = +1,
+            p = masslessMomentum(),
+            q = masslessMomentum()
+        ):
+\end{lstlisting}
+
+The first thing I've implemented was a class called \code{Particle(h, p, q)} with a constructor with arguments \code{h} for the helicity, \code{p} for an array with 4 entries representing the four momentum of the particle and \code{q} also an array with 4 entries to specify the reference momentum. The class contains the following properties:
+
+\begin{itemize}
+  \item \code{eps\_a} returning the polarisation vectors $\varepsilon_{\mu}$ as a column vector,
+  \item \code{eps\_\_a} returning the polarisation vectors $\varepsilon^{\mu}$ as a row vector,
+  \item \code{lambda\_pa} returning the spinor $\lambda_{p \alpha}$m as a column vector,
+  \item \code{lambda\_p\_\_a} returning the spinor $\lambda_p^{\alpha}$ as a row vector,
+  \item \code{lambda\_tilda\_pa\_dot} returning the spinor $\tilde{\lambda}_{p \dot{\alpha}}$ as a row vector,
+  \item \code{lambda\_tilda\_p\_\_a\_dot} returning the spinor $\tilde{\lambda}_{p}^{\dot{\alpha}}$ as a column vector.
+\end{itemize}
+
+\subsection{Berends-Giele current}
+
+The off-shell current is defined as a function of an array of \code{Particle} objects:
+
+\begin{lstlisting}[language=Python, caption=Berends-Giele current]
+def J__a(gluons, rec = 1):
+    # Off-shell current J^mu(1, ..., n)
+    #
+    # @param array gluons   array of gluon Particle objects
+    # @param int rec        recursion depth
+    # @return array         row vector
+    #
+\end{lstlisting}
+
+To calculate the current $J^{\mu}$ for $n$ gluons one has to create an array with $n$ entries of all \code{Particle} objects a call \code{J\_\_a} with that array as only argument. The \code{rec} argument is just there to keep track of the recursion depth and to append the propagator only in steps that are deeper in the recursion that $1$.
+
+\subsection{Parke Taylor formula}
 
 \section{Summary}
 

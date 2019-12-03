@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.11.8)  3 DEC 2019 17:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.11.8)  3 DEC 2019 18:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1987,12 +1987,37 @@ Package: feynmf 1996/12/02 v1.08 LaTeX/Metafont Feynman Diagram Package (ohl)
 \grep@infile=\read3
 \grep@outfile=\write5
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count170
+\lst@gtempboxa=\box57
+\lst@token=\toks45
+\lst@length=\count171
+\lst@currlwidth=\dimen273
+\lst@column=\count172
+\lst@pos=\count173
+\lst@lostspace=\dimen274
+\lst@width=\dimen275
+\lst@newlines=\count174
+\lst@lineno=\count175
+\lst@maxwidth=\dimen276
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count176
+\lst@skipnumbers=\count177
+\lst@framebox=\box58
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
 (/usr/share/texlive/texmf-dist/tex/latex/tikzmark/tikzlibrarytikzmark.code.tex)
 (/usr/share/texlive/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
-\FN@temptoken=\toks45
-\footnotemargin=\dimen273
-\c@pp@next@reset=\count170
+\FN@temptoken=\toks46
+\footnotemargin=\dimen277
+\c@pp@next@reset=\count178
 Package footmisc Info: Declaring symbol style bringhurst on input line 855.
 Package footmisc Info: Declaring symbol style chicago on input line 863.
 Package footmisc Info: Declaring symbol style wiley on input line 872.
@@ -2011,15 +2036,15 @@ Package: xifthen 2015/11/05 v1.4.0 Extended ifthen features
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count171
-\calc@Bcount=\count172
-\calc@Adimen=\dimen274
-\calc@Bdimen=\dimen275
+\calc@Acount=\count179
+\calc@Bcount=\count180
+\calc@Adimen=\dimen278
+\calc@Bdimen=\dimen279
 \calc@Askip=\skip53
 \calc@Bskip=\skip54
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count173
+\calc@Ccount=\count181
 \calc@Cskip=\skip55
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
@@ -2030,7 +2055,7 @@ Package: ifmtarg 2009/09/02 v1.2a check for an empty argument
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count174
+\etb@tempcnta=\count182
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
@@ -2042,30 +2067,30 @@ File: doclicense-english.ldf
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks46
-\thm@bodyfont=\toks47
-\thm@headfont=\toks48
-\thm@notefont=\toks49
-\thm@headpunct=\toks50
+\thm@style=\toks47
+\thm@bodyfont=\toks48
+\thm@headfont=\toks49
+\thm@notefont=\toks50
+\thm@headpunct=\toks51
 \thm@preskip=\skip57
 \thm@postskip=\skip58
 \thm@headsep=\skip59
-\dth@everypar=\toks51
+\dth@everypar=\toks52
 )
-\c@definition=\count175
-\c@theorem=\count176
-\c@corollary=\count177
-\c@example=\count178
+\c@definition=\count183
+\c@theorem=\count184
+\c@corollary=\count185
+\c@example=\count186
 
 (/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2016/01/31 v5.1g context-sensitive quotations (JAW)
-\csq@reset=\count179
-\csq@gtype=\count180
-\csq@glevel=\count181
-\csq@qlevel=\count182
-\csq@maxlvl=\count183
-\csq@tshold=\count184
-\csq@ltx@everypar=\toks52
+\csq@reset=\count187
+\csq@gtype=\count188
+\csq@glevel=\count189
+\csq@qlevel=\count190
+\csq@maxlvl=\count191
+\csq@tshold=\count192
+\csq@ltx@everypar=\toks53
 
 (/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2016/01/31 v5.1g csquotes generic definitions (JAW)
@@ -2084,10 +2109,10 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks53
-\XKV@tempa@toks=\toks54
+\XKV@toks=\toks54
+\XKV@tempa@toks=\toks55
 )
-\XKV@depth=\count185
+\XKV@depth=\count193
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )))
 (./report.aux
@@ -2097,20 +2122,20 @@ LaTeX Warning: Label `sec:frules' multiply defined.
 )
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
+LaTeX Font Info:    ... okay on input line 87.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -2146,19 +2171,19 @@ LaTeX Font Info:    ... okay on input line 55.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\AtBeginShipoutBox=\box57
-Package hyperref Info: Link coloring OFF on input line 55.
+\AtBeginShipoutBox=\box59
+Package hyperref Info: Link coloring OFF on input line 87.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count186
+\c@section@level=\count194
 )
-LaTeX Info: Redefining \ref on input line 55.
-LaTeX Info: Redefining \pageref on input line 55.
-LaTeX Info: Redefining \nameref on input line 55.
+LaTeX Info: Redefining \ref on input line 87.
+LaTeX Info: Redefining \pageref on input line 87.
+LaTeX Info: Redefining \nameref on input line 87.
 
 (./report.out) (./report.out)
 \@outlinefile=\write6
@@ -2167,17 +2192,17 @@ LaTeX Info: Redefining \nameref on input line 55.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count187
-\scratchdimen=\dimen276
-\scratchbox=\box58
-\nofMPsegments=\count188
-\nofMParguments=\count189
-\everyMPshowfont=\toks55
-\MPscratchCnt=\count190
-\MPscratchDim=\dimen277
-\MPnumerator=\count191
-\makeMPintoPDFobject=\count192
-\everyMPtoPDFconversion=\toks56
+\scratchcounter=\count195
+\scratchdimen=\dimen280
+\scratchbox=\box60
+\nofMPsegments=\count196
+\nofMParguments=\count197
+\everyMPshowfont=\toks56
+\MPscratchCnt=\count198
+\MPscratchDim=\dimen281
+\MPnumerator=\count199
+\makeMPintoPDFobject=\count266
+\everyMPtoPDFconversion=\toks57
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -2198,26 +2223,27 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.13} into 
 your preamble.
- on input line 55.
+ on input line 87.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 58.
+\c@lstlisting=\count267
+LaTeX Font Info:    Try loading font information for U+msa on input line 90.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 58.
+LaTeX Font Info:    Try loading font information for U+msb on input line 90.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 60--62
+Underfull \hbox (badness 10000) in paragraph at lines 92--94
 
  []
 
-<doclicense-CC-by-sa.pdf, id=69, 121.45375pt x 43.16125pt>
+<doclicense-CC-by-sa.pdf, id=85, 121.45375pt x 43.16125pt>
 File: doclicense-CC-by-sa.pdf Graphic file (type pdf)
 
 <use doclicense-CC-by-sa.pdf>
-Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 63.
+Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 95.
 (pdftex.def)             Requested size: 92.49939pt x 32.87137pt.
  (./report.toc)
 \tf@toc=\write7
@@ -2227,7 +2253,7 @@ Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 63.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </usr/share/texlive/texmf-d
 ist/tex/latex/doclicense/images/doclicense-CC-by-sa.pdf>] [2]
-LaTeX Font Info:    Try loading font information for U+euf on input line 230.
+LaTeX Font Info:    Try loading font information for U+euf on input line 262.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
@@ -2482,14 +2508,14 @@ rt.tex.
 \openout5 = `report_diagram_ngluons.t1'.
 
 (./report_diagram_ngluons.t1)
-<./img/rec.png, id=190, 812.28468pt x 270.25969pt>
+<./img/rec.png, id=210, 812.28468pt x 270.25969pt>
 File: ./img/rec.png Graphic file (type png)
  <use ./img/rec.png>
-Package pdftex.def Info: ./img/rec.png used on input line 847.
+Package pdftex.def Info: ./img/rec.png used on input line 879.
 (pdftex.def)             Requested size: 324.90811pt x 108.10194pt.
  [6]
 [7 <./img/rec.png>]
-Overfull \hbox (17.41891pt too wide) in paragraph at lines 955--956
+Overfull \hbox (17.41891pt too wide) in paragraph at lines 987--988
 []\OT1/cmr/m/n/9 The same ar-gu-ment also ap-plies to $\OML/cmm/m/it/9 ^^Q[]J[]
 \OT1/cmr/m/n/9 (\OML/cmm/m/it/9 i \OT1/cmr/m/n/9 + 1\OML/cmm/m/it/9 ; [] ; j\OT
 1/cmr/m/n/9 )\OML/cmm/m/it/9 J[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 j \OT1/cmr/m/n/
@@ -2498,7 +2524,23 @@ Overfull \hbox (17.41891pt too wide) in paragraph at lines 955--956
 T1/cmr/m/n/9 (\OML/cmm/m/it/9 i \OT1/cmr/m/n/9 +
  []
 
-[8] [9] [10] [11] [12] [13] [14] (./report.bbl) [15]
+[8] [9] [10] [11] [12] [13] [14]
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 1347.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1368
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1368.
+
+ [15] (./report.bbl)
+[16]
 
 feynmf: File diagram_3gluon_vertex.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess diagram_3gluon_vert
@@ -2738,27 +2780,27 @@ ort.tex.
 
 \openout5 = `diagram_co_fermion_prop.t1'.
 
-(./diagram_co_fermion_prop.t1) [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1610.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1610.
+(./diagram_co_fermion_prop.t1) [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1695.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1695.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1610.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1610.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1695.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1695.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: E08C32C11618FC8D6B7B7D62E257BF63;949.
+(rerunfilecheck)             Checksum: 64D0FA00977650C7E6AC8C834FDE5C59;1215.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1610.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1695.
  ) 
 Here is how much of TeX's memory you used:
- 35671 strings out of 494910
- 808004 string characters out of 6179836
- 967700 words of memory out of 5000000
- 38224 multiletter control sequences out of 15000+600000
- 15146 words of font info for 87 fonts, out of 8000000 for 9000
+ 37523 strings out of 494910
+ 831995 string characters out of 6179836
+ 1068711 words of memory out of 5000000
+ 40024 multiletter control sequences out of 15000+600000
+ 15818 words of font info for 91 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  69i,22n,89p,10403b,2151s stack positions out of 5000i,500n,10000p,200000b,80000s
  <./diagram_co_fermion_prop.600pk> <./diagram_co_gluon_fermion_vertex_b.600pk
@@ -2792,13 +2834,14 @@ f-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-euler/eufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/sym
-bols/msbm10.pfb>
-Output written on report.pdf (16 pages, 394244 bytes).
+sfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/e
+ufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+bm10.pfb>
+Output written on report.pdf (17 pages, 413707 bytes).
 PDF statistics:
- 566 PDF objects out of 1000 (max. 8388607)
- 489 compressed objects within 5 object streams
- 116 named destinations out of 1000 (max. 500000)
- 143 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 629 PDF objects out of 1000 (max. 8388607)
+ 549 compressed objects within 6 object streams
+ 147 named destinations out of 1000 (max. 500000)
+ 175 words of extra memory for PDF output out of 10000 (max. 10000000)
 

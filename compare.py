@@ -77,7 +77,8 @@ for n in N:
 
         # manual method
         start = timer()
-        J__mu = J__a(gluons[:-1], P[:-1])
+        J__mu = J__a(gluons[:-1])
+        print(J__mu)
         eps_mu = gluons[-1].eps_a
         A_n__tree_my = J__mu.dot(eps_mu)[0,0]
         end = timer()

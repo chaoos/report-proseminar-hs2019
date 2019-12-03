@@ -7,6 +7,7 @@ import scipy.optimize
 import numpy.linalg
 from random import uniform
 import warnings
+import itertools
 
 rand = lambda : np.random.uniform(-1,1)
 rand2 = lambda : np.random.uniform(-2,2)
@@ -160,20 +161,20 @@ def md (a, b):
 class Particle:
     #
     # @param Particle self      reference to the class instance
-    # @param array helicity     the helicity, defaults to +1
+    # @param int h              the helicity, defaults to +1
     # @param array p            the 4-momentum, defaults to an random massless momentum
     # @param array q            the 4-momentum reference vector
     # @return Particle          class instance
     #
     def __init__ (self,
             # default values
-            helicity = +1,
+            h = +1,
             p = masslessMomentum(),
             q = masslessMomentum()
         ):
 
         self.p = p
-        self.helicity = helicity
+        self.h = h
         self.q = q
 
     @property
@@ -274,9 +275,9 @@ class Particle:
     # ε_p+
     @property
     def eps__a(self):
-        if (self.helicity == +1):
+        if (self.h == +1):
             return self.eps_plus__a
-        elif (self.helicity == -1):
+        elif (self.h == -1):
             return self.eps_minus__a
         else:
             return None
@@ -285,9 +286,9 @@ class Particle:
     # ε_p+
     @property
     def eps_a(self):
-        if (self.helicity == +1):
+        if (self.h == +1):
             return self.eps_plus_a
-        elif (self.helicity == -1):
+        elif (self.h == -1):
             return self.eps_minus_a
         else:
             return None
@@ -304,18 +305,18 @@ class Particle:
     def ε_a(self):
         return self.eps_a
 
-# Feynman rule for the gluon propagator
-#
-# @param array p    4-momentum of the virtual particle
-# @param int μ      Lorentz index initial (can have values 0,1,2,3)
-# @param int ν      Lorentz index final   (can have values 0,1,2,3)
-# @return complex
-#
-#     p
-# μ ----- ν
-#
 def Pg(p, μ, ν):
-    return -1j*g_ab[μ][ν]/minkowskiDot(p, p)
+    # Feynman rule for the gluon propagator
+    #
+    # @param array p    4-momentum of the virtual particle
+    # @param int μ      Lorentz index initial (can have values 0,1,2,3)
+    # @param int ν      Lorentz index final   (can have values 0,1,2,3)
+    # @return complex
+    #
+    #     p
+    # μ ----- ν
+    #
+    return -1j*g_ab[μ,ν]/minkowskiDot(p, p)
 
 # Feynman rule for the 3-gluon vertex
 #
@@ -392,7 +393,7 @@ def spinor_prod2(p, q):
 #
 def PT(gluons):
     # extract negative helicities
-    helicities = [o.helicity for o in gluons]
+    helicities = [o.h for o in gluons]
     get_indexes = lambda x, xs: [i for (y, i) in zip(xs, range(len(xs))) if x == y]
     h_neg = get_indexes(-1, helicities)
 
@@ -444,78 +445,85 @@ def test(message, condition):
     ))
     return condition
 
-# gives the sum pf p's = p_i + ... + p_j
 def P_ij(P,i,j):
+    # gives the sum of p's = p_i + ... + p_j
     return np.sum(P[i:j+1], axis=0)
 
 # (p_i + ... + p_j)^2
 def P_ij__2(P,i,j):
     return md(P_ij(P,i,j), P_ij(P,i,j))
 
-# J_μ column vector
-def J_a(gluons, P, rec = 1, it = "mu"):
-    return J__a(gluons, P, rec, it).dot(g_ab).reshape(4,1)
+def J_a(gluons, rec = 1):
+    # Off-shell current J_μ(1, ..., n)
+    #
+    # @param array gluons   array of gluon Particle objects
+    # @param int rec        recursion depth
+    # @return array         column vector
+    #
+    return J__a(gluons, rec).dot(g_ab).reshape(4,1)
 
-# J^μ row vector
-def J__a(gluons, P, rec = 1, it = "mu"):
+def J__a(gluons, rec = 1):
     # Off-shell current J^μ(1, ..., n)
     #
     # @param array gluons   array of gluon Particle objects
-    # @param array P        array of 4-momenta
     # @param int rec        recursion depth
-    # @param int it         name of Lorentz index
     # @return array         row vector
     #
     n = len(gluons)
+    P = [g.p for g in gluons]
+    m = range(0, 4)
 
     # recursion base
     if n == 1:
         return gluons[0].eps__a # row vector
     
+    # initialize the return value to and array of zeros
     ret = np.zeros(4, dtype=complex)
 
     # 1st recursion step from i=0 to n-2
     for i in range(0, n-1):
-        P_0i = P_ij(P,0,i)
+        P_0i   = P_ij(P,0,i)
         P_ip1n = P_ij(P,i+1,n)
+        J_nu  = J_a(gluons[0:i+1], rec+1)
+        J_rho = J_a(gluons[i+1:], rec+1)
 
-        J_nu  = J_a(gluons[0:i+1], P[0:i+1], rec+1, "nu")
-        J_rho = J_a(gluons[i+1:], P[i+1:], rec+1, "rho")
-
-        for mu in range(0, 4): # mu = 0,1,2,3
-            for nu in range(0, 4): # nu = 0,1,2,3                
-                for rho in range(0, 4): #rho = 0,1,2,3
-                    ret[mu] += V3(mu, nu, rho, P_0i, P_ip1n)*J_nu[nu,0]*J_rho[rho,0]
+        for mu, nu, rho in itertools.product(m, m, m):
+            ret[mu] += v3(mu, nu, rho, P_0i, P_ip1n)*J_nu[nu,0]*J_rho[rho,0]            
 
     # 2nd recursion step from i=0 to n-3 (including n-3) ...
     for i in range(0, n-2):
         # ... and j=i+1 to n-2 (including n-2)
         for j in range(i+1, n-1):
-            J_nu    = J_a(gluons[0:i+1],   P[0:i+1],   rec+1, "nu")
-            J_rho   = J_a(gluons[i+1:j+1], P[i+1:j+1], rec+1, "rho")
-            J_sigma = J_a(gluons[j+1:],    P[j+1:],    rec+1, "sigma")
+            J_nu    = J_a(gluons[0:i+1],   rec+1)
+            J_rho   = J_a(gluons[i+1:j+1], rec+1)
+            J_sigma = J_a(gluons[j+1:],    rec+1)
 
-            for mu in range(0, 4): # mu = 0,1,2,3
-                for nu in range(0, 4): # nu = 0,1,2,3                
-                    for rho in range(0, 4): #rho = 0,1,2,3
-                        for sigma in range(0, 4): #rho = 0,1,2,3
-                            ret[mu] += V4(mu, nu, rho, sigma)*J_nu[nu,0]*J_rho[rho,0]*J_sigma[sigma,0]
+            for mu, nu, rho, sigma in itertools.product(m, m, m, m):
+                ret[mu] += v4(mu, nu, rho, sigma)*J_nu[nu,0]*J_rho[rho,0]*J_sigma[sigma,0]
 
-    # if we are not in the first recursion step
+    # if we are not in the first recursion step the gluon propagator needs to be appended
     if rec != 1:
-        ret *= -1j/P_ij__2(P, 0, n)
+        ret *= pg(P_ij(P, 0, n))
 
     return ret.reshape(1,4)
 
 
-def V3(mu, nu, rho, P, Q):
+def pg(p):
+    # Feynman rule for the gluon propagator
+    #
+    # @param array p    4-momentum of the virtual particle
+    # @return complex
+    #
+    return -1j/md(p, p)
+
+def v3(mu, nu, rho, P, Q):
     # Feynman rule for the 3-gluon vertex
     #
     # @param array P      4-momentum of gluon 1
     # @param array Q      4-momentum of gluon 2
-    # @param int mu       Lorentz index of gluon 1 (can have values 0,1,2,3)
-    # @param int nu       Lorentz index of gluon 2 (can have values 0,1,2,3)
-    # @param int rho      Lorentz index of gluon 3 (can have values 0,1,2,3)
+    # @param int mu       Lorentz index of gluon 1
+    # @param int nu       Lorentz index of gluon 2
+    # @param int rho      Lorentz index of gluon 3
     # @return complex
     #
     #     P,μ
@@ -523,9 +531,13 @@ def V3(mu, nu, rho, P, Q):
     #     / \
     # P+Q,λ   Q,ν
     #
-    return (1j/np.sqrt(2))*(g__ab[nu][rho]*(P-Q)[mu] + 2*g__ab[rho][mu]*Q[nu] - 2*g__ab[mu][nu]*P[rho])
+    return (1j/np.sqrt(2))*(
+        +   g__ab[nu,rho]*(P - Q)[mu]
+        + 2*g__ab[rho,mu]*Q[nu]
+        - 2*g__ab[mu,nu]*P[rho]
+    )
 
-def V4(mu, nu, rho, sigma):
+def v4(mu, nu, rho, sigma):
     # Feynman rule for the 4-gluon vertex
     #
     # @param int mu     Lorentz index of gluon 1
@@ -539,7 +551,11 @@ def V4(mu, nu, rho, sigma):
     #    /\
     #  λ    ρ
     #
-    return 0.5j*( 2*g__ab[mu][rho]*g__ab[nu][sigma] - g__ab[mu][nu]*g__ab[rho][sigma] - g__ab[mu][sigma]*g__ab[nu][rho] )
+    return 0.5j*(
+        +2*g__ab[mu,rho]*g__ab[nu,sigma]
+        -  g__ab[mu,nu]*g__ab[rho,sigma]
+        -  g__ab[mu,sigma]*g__ab[nu,rho]
+    )
 
 # J_μ column vector
 def J_a_2(gluons, P, rec = 1, it = "mu"):

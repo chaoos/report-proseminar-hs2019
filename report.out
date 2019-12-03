@@ -8,8 +8,12 @@
 \BOOKMARK [2][-]{subsection.4.1}{Recursion idea}{section.4}% 8
 \BOOKMARK [2][-]{subsection.4.2}{Parke Taylor formula}{section.4}% 9
 \BOOKMARK [1][-]{section.5}{Implementation}{}% 10
-\BOOKMARK [1][-]{section.6}{Summary}{}% 11
-\BOOKMARK [1][-]{section*.3}{Appendices}{}% 12
-\BOOKMARK [2][-]{subsection.Alph0.1}{QCD Feynman rules}{section*.3}% 13
-\BOOKMARK [2][-]{subsection.Alph0.2}{Color ordered QCD Feynman rules}{section*.3}% 14
-\BOOKMARK [2][-]{subsection.Alph0.3}{Code}{section*.3}% 15
+\BOOKMARK [2][-]{subsection.5.1}{Conventions}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Particle class}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.3}{Berends-Giele current}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.4}{Parke Taylor formula}{section.5}% 14
+\BOOKMARK [1][-]{section.6}{Summary}{}% 15
+\BOOKMARK [1][-]{section*.3}{Appendices}{}% 16
+\BOOKMARK [2][-]{subsection.Alph0.1}{QCD Feynman rules}{section*.3}% 17
+\BOOKMARK [2][-]{subsection.Alph0.2}{Color ordered QCD Feynman rules}{section*.3}% 18
+\BOOKMARK [2][-]{subsection.Alph0.3}{Code}{section*.3}% 19
