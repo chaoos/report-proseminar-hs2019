@@ -1,16 +1,19 @@
-This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  17 NOV 2019 22:55
-**diagram_co_4gluon_vertex.mf
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  8 DEC 2019 15:48
+**\mode:=localfont; mag:=1; input diagram_co_4gluon_vertex
 (diagram_co_4gluon_vertex.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
-feynmf: 1
-:1:\fmfL(-4.24265,-4.24265,rt){$\sigma $}%
-:1:\fmfL(-4.24265,34.24265,rb){$\mu $}%
-:1:\fmfL(34.24265,-4.24265,lt){$\rho $}%
-:1:\fmfL(34.24265,34.24265,lb){$\nu $}% [1] ) 
+:1:\fmfL(-4.30652,-4.30652,rt){$\sigma $}%
+:1:\fmfL(-4.30652,34.29857,rb){$\mu $}%
+:1:\fmfL(34.29857,-4.30652,lt){$\rho $}%
+:1:\fmfL(34.29857,34.29857,lb){$\nu $}% [1] ) 
 Here is how much of METAFONT's memory you used:
- 624 strings out of 5274
- 7364 string characters out of 69975
- 55149 words of memory out of 5000000
+ 618 strings out of 5274
+ 7283 string characters out of 69975
+ 33525 words of memory out of 5000000
  1378 symbolic tokens out of 9500
- 13i,67n,56r,26p,121b stack positions out of 300i,300n,1000r,150p,200000b
+ 13i,67n,58r,26p,150b stack positions out of 300i,300n,1000r,150p,200000b
+ 
+(You used 2w,2h,1d,1i,0l,0k,0e,0p metric file positions
+  out of 256w,16h,16d,64i,15000l,2500k,256e,60p)
 
-Output written on diagram_co_4gluon_vertex.2602gf (1 character, 17928 bytes).
+Font metrics written on diagram_co_4gluon_vertex.tfm.
+Output written on diagram_co_4gluon_vertex.600gf (1 character, 2892 bytes).

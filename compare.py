@@ -1,6 +1,8 @@
 # coding: utf-8
 
 from helpers import *
+from bgcurrent import BGCurrent
+#from chelpers import *
 from testing import Testing, equal
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,9 +11,19 @@ import itertools
 import random
 from timeit import default_timer as timer
 
-N = [2, 4, 5, 6, 7]
+#N = [4,5,6,7,8,9,10,]
+N1 = np.arange(4,51)
+N2 = np.arange(52,70,2)
+N3 = np.arange(70,111,5)
+N = np.concatenate([N1,N2,N3])
 Y1, Y2 = [], []
 Y = dict()
+
+#p1 = masslessMomentum()
+#p2 = masslessMomentum()
+#print(v4())
+
+#quit()
 
 for n in N:
 
@@ -26,6 +38,8 @@ for n in N:
             'desc': r'all q equal',
             'f': lambda i, hi: q_all,
         },
+    }
+    """
         1: {
             'desc': r'all q different',
             'f': lambda i, hi: masslessMomentum(),
@@ -35,6 +49,7 @@ for n in N:
             'f': lambda i, hi: q_minus if hi == -1 else q_plus,
         },
     }
+    """
 
     h_configs = {
         0: {
@@ -75,12 +90,16 @@ for n in N:
         for i in range(n):
             gluons.append(Particle(h[i], P[i], q[i]))
 
+        gluons = np.array(gluons)
+
         # manual method
         start = timer()
-        J__mu = J__a(gluons[:-1])
-        print(J__mu)
+        #J__mu = J__a(gluons[:-1]).reshape(1,4)
+        BG = BGCurrent(gluons[:-1])
+        J__mu = BG.J__a()
         eps_mu = gluons[-1].eps_a
-        A_n__tree_my = J__mu.dot(eps_mu)[0,0]
+        #A_n__tree_my = J__mu.dot(eps_mu)[0,0]
+        A_n__tree_my = np.einsum('i,i', eps_mu.reshape(4), J__mu.reshape(4))
         end = timer()
         time_my = end - start
 
@@ -89,8 +108,11 @@ for n in N:
         A_n__tree_PT = PT(gluons)
         end = timer()
         time_PT = np.nan if np.isnan(A_n__tree_PT) else end - start
-
+        
         t.test("CASE "+str(j)+": The two formulas give equal amplitudes (n="+str(n)+", "+h_configs[hi]['desc']+", "+q_configs[qi]['desc']+")", equal(A_n__tree_my, A_n__tree_PT))
+
+        print("time_PT", time_PT)
+        print("time_my", time_my)
 
         #t.test("CASE "+str(j)+":  The two formulas give equal magnitudes ("+h_configs[hi]['desc']+", "+q_configs[qi]['desc']+")", equal(np.abs(A_n__tree_my)**2, np.abs(A_n__tree_PT)**2))
 
@@ -120,14 +142,12 @@ plt.show()
 """
 
 
-plt.figure(1)
-for qi in q_configs:
-    q_desc = q_configs[qi]['desc']
-    plt.semilogy(N, Y[q_desc], '-', label=r'Recursive Implementation (case '+str(qi+1)+')')
-
-print(N, Y[q_configs[0]['desc']+"_PT"])
-plt.semilogy(N, Y[q_configs[0]['desc']+"_PT"], '-', label=r'Parke Taylor')
+q_desc = q_configs[0]['desc']
+plt.semilogy(N, Y[q_desc], 'bo', label=r'Berends-Giele current $J^{\mu}$')
+plt.semilogy(N, Y[q_configs[0]['desc']+"_PT"], 'ro', label=r'Parke Taylor')
 plt.legend(loc='best')
 plt.grid(True)
-plt.savefig('plots/comparison2.eps')
+plt.xlabel(r'number of gluons $n$')
+plt.ylabel(r'time $t$')
+plt.savefig('plots/comparison4.eps')
 plt.show()

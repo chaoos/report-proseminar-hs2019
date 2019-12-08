@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[Badger et~al., 2013]{badger2013}
+Badger, S., Biedermann, B., Hackl, L., Plefka, J., Schuster, T., and Uwer, P.
+  (2013).
+\newblock Comparing efficient computation methods for massless qcd tree
+  amplitudes: Closed analytic formulas versus berends-giele recursion.
+\newblock {\em Physical Review D}, 87(3):034011.
+
 \bibitem[Berends and Giele, 1987]{bg87colorordering}
 Berends, F.~A. and Giele, W. (1987).
 \newblock The six-gluon process as an example of weyl-van der waerden spinor
@@ -17,10 +24,21 @@ Berends, F.~A., Kleiss, R., De~Causmaecker, P., Gastmans, R., and Wu, T.~T.
 \newblock Single bremsstrahlung processes in gauge theories.
 \newblock {\em Physics Letters B}, 103(2):124--128.
 
+\bibitem[Deur et~al., 2016]{deur2016}
+Deur, A., Brodsky, S.~J., and de~T{\'e}ramond, G.~F. (2016).
+\newblock The qcd running coupling.
+\newblock {\em Progress in Particle and Nuclear Physics}, 90:1--74.
+
 \bibitem[Dixon, 1996]{dixon1996}
 Dixon, L. (1996).
 \newblock Calculating scattering amplitudes efficiently.
 \newblock {\em arXiv preprint hep-ph/9601359}.
+
+\bibitem[Goldberg, 1991]{goldberg1991}
+Goldberg, D. (1991).
+\newblock What every computer scientist should know about floating-point
+  arithmetic.
+\newblock {\em ACM Computing Surveys (CSUR)}, 23(1):5--48.
 
 \bibitem[Gruber, 2019]{github}
 Gruber, R. (2019).
@@ -48,6 +66,13 @@ Oliphant, T. (2006--).
 Parke, S.~J. and Taylor, T.~R. (1986).
 \newblock Amplitude for $n$-gluon scattering.
 \newblock {\em Phys. Rev. Lett.}, 56:2459--2460.
+
+\bibitem[SciPy, 2019]{mem}
+SciPy (2008-2019).
+\newblock Internal memory layout of an ndarray.
+\newblock
+  \url{https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html#internal-memory-layout-of-an-ndarray}.
+\newblock Accessed: 2019-12-05.
 
 \bibitem[{Virtanen} et~al., 2019]{scipy}
 {Virtanen}, P., {Gommers}, R., {Oliphant}, T.~E., {Haberland}, M., {Reddy}, T.,

@@ -15,6 +15,7 @@
 \usepackage{feynmf} % for feynman diagrams
 \usepackage{listings} % for code listings
 \usepackage{xcolor}
+\usepackage{svg} % svg images
 
 %New colors defined below
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -68,14 +69,14 @@
 \newtheorem{example}{Example}[section]
 
 \allowdisplaybreaks % page breaks in equations
-\graphicspath{ {./img/} }
+\graphicspath{{./img/}{./plots/}}
 
 \geometry{
- a4paper,
- left=29mm,
- right=29mm,
- top=20mm,
- }
+  a4paper,
+  left=29mm,
+  right=29mm,
+  top=20mm,
+}
 
 \def\code#1{\texttt{#1}}
 
@@ -89,7 +90,7 @@
 \maketitle
 
 \abstract 
-TODO
+QCD tree amplitudes are of great interest. A calculation of tree level scattering amplitudes in QCD with only gluons involved is presented. The calculation is simplified using color decomposition of full amplitudes into color ordered partial amplitudes. The results are formulated using the spinor helicity formalism for massless vector bosons. A concrete implementation of the methods mentioned in the report are introduced and further ways for optimisation are discussed.
 \newline
 
 \doclicenseThis
@@ -102,18 +103,31 @@ TODO
 
 \section{Introduction}
 
-TODO
+For predictions of multi-jet processes at high-energy colliders, we need the knowledge of scattering amplitudes with multiple final parton states in QCD. They are evident in the prediction of cross sections. Writing down all involved Feynman diagrams in the perturbative expansion for such a process can become very cumbersome, since they are armed with a complicated color algebra any many kinematic variables. The perturbative expansion is in the QCD couping $\alpha_s$, which is in the applicable scale at high energies \cite{deur2016}. In this report such amplitudes are discussed at tree level with an arbitrary number of gluons.
+
+In section \ref{sec:spinor} the spinor helicity formalism for massless vector bosons is briefly introduced, such that later in the report, we are able to correctly formulate the problems. It turns out that MHV amplitudes can be simplified massively using that formalism.
+
+In a second preliminary in section \ref{sec:colorordering} a concept called color ordering is introduced. With it, we can decompose tree level amplitudes into parts that are not dependent on color anymore. These parts are then called color ordered amplitudes or partial amplitudes. Such objects have much simpler kinematic properties than the full amplitude, since they only recieve contributions from diagrams with a particular ordering of the external legs. The remaining components of the full amplitude consist of pure traces that can be evaluted quite fast.
+
+Section \ref{sec:bgcurrent} the Berends-Giele current is presented. This is a recursive approach to calculate partial amplitudes. Even if the analytical expressions recieved by this method are not easy to simplify, the numerical implementation is simple and evaluation is quite efficient.
+
+In section \ref{sec:pt} a formula for MHV amplitudes is introduced and proofed - the Parke-Taylor formula. MHV amplitudes are maximally helicity violating amplitudes that are not vanishing. In case of pure gluonic scattering amplitudes, they consist of $n-2$ gluons with the same helicity and $2$ with the opposite helicity.
+
+Evetually in section \ref{sec:implementation} a concrete implementation of both - the Berends-Giele current and the Parke-Taylor formula - is discussed. Both formulas are compared in terms of performace. The computation time required by these two methods scales with the number of external legs. The linear scaling of the Parke-Taylor formula of course ends up in a faster calculation than with the Berends-Giele recursion which scales with $n!$, because it's recursive. 
+
+Finally in the appendices there are - for the sake of completeness - Feynman rules for QCD with and without color ordering in Feynman gauge.
 
 \section{The Spinor helicity formalism for massless vector bosons}
+\label{sec:spinor}
 
-In calculating amplitudes in QCD one question that arises is: What are the right kinematic variables for scattering amplitudes? Typically one uses the 4-momenta of involved particles. For the momenta, specially their Lorentz-invariant products $s_{ij}$ should be considered. Also the helicity basis \cite{berends81} is very convenient, where the spin is quantized along the axis of $p$. For positive helicity, the spin points in the same direction as $p$, for negtive helicity in the opposite direction. We have $u_{\pm}(p)$, which is a $4$-spinor. We know that for massless vectors there is a smaller representation which is two dimensional. For a four momentum $p$ and a helicity $h$, we get two $2$-spinors:
+In calculating amplitudes in QCD one question that arises is: What are the right kinematic variables for scattering amplitudes? Typically one uses the 4-momenta of the involved particles. For the momenta, specially their Lorentz-invariant products $s_{ij} = \left( p_i + p_j \right)^2$ should be considered. Also the helicity basis \cite{berends81} is very convenient, where the spin is quantized along the axis of the momentum $p$. For positive helicity, the spin points in the same direction as $p$, for negtive helicity in the opposite direction. We have $u_{\pm}(p)$, which is a $4$-spinor. We know that for massless vectors there is a smaller representation which is two dimensional. For a four momentum $p$ and a helicity $h$, we get two $2$-spinors:
 
 \begin{align*}
     p^{\mu}, h \rightarrow u_{-}(p) &= \begin{pmatrix} \lambda_{p \alpha} \\ 0 \\ 0\end{pmatrix} \leftrightarrow | p \rangle = \lambda_{p \alpha} = \begin{pmatrix}\cdot \\ \cdot\end{pmatrix} \\
     u_{+}(p) &= \begin{pmatrix}0 \\ 0 \\ \tilde{\lambda}_{p}^{\dot{\alpha}} \end{pmatrix} \leftrightarrow | p \rbrack = \tilde{\lambda}^{\dot{\alpha}}_p = \begin{pmatrix}\cdot \\ \cdot\end{pmatrix}.
 \end{align*}
 
-In this representation, $| p \rangle$ is a column vector with helicity $-1/2$, whereas $| p \rbrack$ is a column vector with helicity $+1/2$. The dotted and undotted indices correpsond to two different spinor representations of the Lorentz-group. Positive $u_{\pm}$ and negative $v_{\pm}$ energy solutions are not distinct, since $p^2 = 0$.
+In this representation, $| p \rangle$ is a column vector with helicity $-1/2$, whereas $| p \rbrack$ is a column vector with helicity $+1/2$. The dotted and undotted indices correspond to two different spinor representations of the Lorentz-group. Positive $u_{\pm}$ and negative $v_{\pm}$ energy solutions are not distinct, since $p^2 = 0$.
 
 Using this formalism, the massless Dirac equation can then be written as
 
@@ -123,7 +137,7 @@ Using this formalism, the massless Dirac equation can then be written as
 
 \begin{definition}[Short notation of spinors]
 
-As a short notation, when we are dealing with $n$ particles, we have $n$ four momenta labelled $p_i$, helicities labelled $_hi$ and maybe adjoint colors labelled $a_i$, where $i \in \{1, ..., n\}$. The $i$-th spinor can then be written as
+As a short notation, when we are dealing with $n$ particles, we have $n$ four momenta labelled $p_i$, helicities labelled $h_i$ and maybe adjoint colors labelled $a_i$, where $i \in \{1, ..., n\}$. The $i$-th spinor can then be written as
 
 \begin{align*}
     | p_i \rangle \equiv | i \rangle, \\
@@ -149,6 +163,8 @@ where the $\epsilon$ matrices are anti-symmetric and given by
 \begin{align*}
     \epsilon_{\alpha \beta} = \epsilon_{\dot{\alpha} \dot{\beta}} &= \begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}, & \epsilon^{\alpha \beta} = \epsilon^{\dot{\alpha} \dot{\beta}} &= \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix}.
 \end{align*}
+
+Notice that, the spinor products are anti-symmetric by definition, $\langle ii \rangle = \lbrack ii \rbrack = 0$.
 
 \end{definition}
 
@@ -245,21 +261,34 @@ Feynmans slash notation has also a representation in the new formalism
 
 \end{definition}
 
-Using the spinor products, we are now able to build polarisation vectors for massless vectors bosons with helicity $h=\pm1$ \cite{xu86},
+Using the spinor products, we are now able to build polarisation vectors for massless vector bosons with helicity $h=\pm1$ \cite{xu86},
 
-\begin{align*}
-    \varepsilon_{+}^{\mu}(p,q) = \frac{1}{\sqrt{2}} \frac{\langle q | \sigma^{\mu} | p \rbrack }{ \langle qp \rangle } \quad \text{and} \quad \varepsilon_{-}^{\mu}(p,q) = - \frac{1}{\sqrt{2}} \frac{\lbrack q | \overline{\sigma}^{\mu} | p \rangle }{ \lbrack qp \rbrack },
-\end{align*}
+\begin{align}
+    \varepsilon_{+}^{\mu}(p,q) = \frac{1}{\sqrt{2}} \frac{\langle q | \sigma^{\mu} | p \rbrack }{ \langle qp \rangle } \quad \text{and} \quad \varepsilon_{-}^{\mu}(p,q) = - \frac{1}{\sqrt{2}} \frac{\lbrack q | \overline{\sigma}^{\mu} | p \rangle }{ \lbrack qp \rbrack }, \label{eq:polvecs}
+\end{align}
 
-where $q$ is a reference vector with massless momentum $q^2 = 0$. $\varepsilon_{+}$ is a state with helicity $h=+1$, because $| p \rbrack$ in the numerator gives $+1/2$ and $| p \rangle$ in the denominator also gives $+1/2$. The choice of $q$ is a gauge choice and absolutely free as long as $q^2=0$ and $q$ is not proportional to $p$, because else the denominator would vanish. This choice originates from the gauge invariance of the gauge field $A^a_{\mu}$ in the Lagrangian. The results in the end should not depend on any reference momentum $q$, but intermediate results could. When choosing a different $q'$ as reference momentum, the polarisation vectors are shifted by an amount proportional to $p^{\mu}$.
+where $q$ is a reference vector with massless momentum $q^2 = 0$. $\varepsilon_{+}$ is a state with helicity $h=+1$, because $| p \rbrack$ in the numerator gives $+1/2$ and $| p \rangle$ gives $-1/2$, but in the denominator it also gives $+1/2$. The choice of $q$ is a gauge choice and absolutely free as long as $q^2=0$ and $q$ is not proportional to $p$, because else the spinor product in the denominator would vanish. This choice originates from the gauge invariance of the gauge field $A^a_{\mu}$ in the Lagrangian. The results in the end should not depend on any reference momentum $q$, but intermediate results do in general. When choosing a different $q'$ as reference momentum, the polarisation vectors are shifted by an amount proportional to $p^{\mu}$.
 
 \section{Color Ordering}
+\label{sec:colorordering}
 
-Color ordering is a concept to treat the color component of scattering amplitudes. We want to decompose the problem into subproblems. This can be achieved by color ordering. In the Feynman rules of QCD, there is a lot of color dependency.
+Color ordering is a concept to treat the color component of scattering amplitudes. We want to decompose the problem into subproblems. This can be achieved by color ordering. In the Feynman rules of QCD, there is a lot of color dependency (see appendix \ref{sec:frules}).
 
 \subsection{QCD gauge group}
 
 The gauge group of QCD is $SU(N_c)$ - unitary $N_c \times N_c$ matrices with unit determinant - with $N_c = 3$ the number of colors. The Lie algebra of this group is $\mathfrak{su}(N_c)$ - traceless hermitian $N_c \times N_c$ matrcies. The unit determinant converts to tracelessness, when going to the Lie algebra. The dimension of both the gauge group and its Lie algebra is $N_c^2 - 1$ (the tracelessness condition removes one dimention). We therefore have a basis of the Lie algebra - the generators of the gauge group - denoted by $T^a$, where $a$ is the adjoint color index going from $1$ to $N_c^2 - 1 = 8$.
+
+\begin{definition}[Normalisation]
+\label{def:normalisation}
+We define the normalisation of the generators as
+
+\begin{align}
+    tr (T^a T^b) = \delta^{ab}. \label{eq:normalisation}
+\end{align}
+
+This normalisation, though uncommon in literature, prevents later expressions from unnecessary $\sqrt{2}$ apprearing.
+
+\end{definition}
 
 \begin{prop}[Fierz identity]
 \label{prop:fierz}
@@ -292,7 +321,7 @@ where we have used the fact that the $T^a$ are traceless and the trace of the id
     tr \left( A T^c \right) = b_c,
 \end{align*}
 
-where we again used the tracelessness of the $T^a$ and their normalisation. Therefore we can write the $i,j$-th entry of the matrix $A$ as
+where we again used the tracelessness of the $T^a$ and their normalisation (definition \ref{def:normalisation}). Therefore we can write the $i,j$-th entry of the matrix $A$ as
 
 \begin{align*}
     {A_{i}}^{j} = \sum_{a=1}^{N_c^2 -1} {(T^a)_{k}}^{l} {A_{l}}^{k} {(T^a)_{i}}^{j} + \frac{tr \left( A \right)}{N_c} {\delta_{i}}^{j}.
@@ -308,25 +337,13 @@ that holds for all ${A_{l}}^{k}$, which implies that the term is the square back
 
 \end{proof}
 
-\begin{definition}[Normalisation]
-\label{def:normalisation}
-We define the normalisation of the generators as
-
-\begin{align}
-    tr (T^a T^b) = \delta^{ab}. \label{eq:normalisation}
-\end{align}
-
-This normalisation, though uncommon in literature, prevents later expressions from unnecessary $\sqrt{2}$ apprearing.
-
-\end{definition}
-
 On the other hand, the generators also satisfy the relation
 
 \begin{align}
     [ T^a, T^b ] = i \sqrt{2} \sum_{c=1}^{N_c^2 - 1} f^{abc} T^c, \label{eq:liebracket}
 \end{align}
 
-where the $f^{abc}$ are anti-symmetric. The above relation can be solved for the $f^{abc}$: starting with equation \eqref{eq:liebracket} and multiplying from the right side with another $T^d$ and taking the trace, we obtain
+where the $f^{abc}$ are the anti-symmetric structure constants. The above relation can be solved for the $f^{abc}$: starting with equation \eqref{eq:liebracket} and multiplying from the right side with another $T^d$ and taking the trace, we obtain
 
 \begin{align}
     tr (T^a T^b T^d) - tr(T^b T^b T^d)  = i \sqrt{2} \sum_{c=1}^{N_c^2 - 1} f^{abc} tr (T^c T^d).
@@ -338,7 +355,7 @@ Using the definition of the normalisation \ref{def:normalisation}, the sum on th
     f^{abc} = -\frac{i}{\sqrt{2}} \left( tr (T^a T^b T^c) - tr(T^b T^b T^c) \right). \label{eq:fabc}
 \end{align}
 
-The expression for the structure constants \eqref{eq:fabc} can be written pictorially in a very intuitive way taking only color into account:
+The expression for the structure constants \eqref{eq:fabc} can be written pictorially in a very intuitive way taking only the color component from the Feynman rules into account:
 
 \begin{equation}
 \begin{aligned}
@@ -426,7 +443,7 @@ The expression for the structure constants \eqref{eq:fabc} can be written pictor
 \end{aligned}
 \end{equation}
 
-The structure constant $f^{abc}$ is proportional to the $3$-gluon vertex according to the Feynman rules (see appendix \ref{sec:frules}), whereas the loop diagrams on the right hand side produce traces of all involved generators $T^a$ using the Feynman rules for the quark-gloun vertices. The Fierz identity \eqref{eq:fierz2} can also be illustrated in a similar way:
+The structure constant $f^{abc}$ is proportional to the $3$-gluon vertex according to the Feynman rules (see appendix \ref{sec:frules}), whereas the loop diagrams on the right hand side produce traces of all involved generators $T^a$ using the Feynman rule for the quark-gloun vertex. The Fierz identity \eqref{eq:fierz2} can also be illustrated in a similar way:
 
 \begin{equation}
 \begin{aligned}
@@ -825,19 +842,20 @@ This gives motivation to the following formula for a full pure gluonic tree ampl
     \end{aligned}
 \end{equation}
 
-where $n$ is the number of involved gluons, $g$ is the strong coupling constant, $S_n$ is the symmetric group, conststing of all permuatations of $n$ objects, $Z_n$ is the cyclic group, consisting of only cyclic permutations of $n$ objects, $S_n/Z_n$ sweeps out all distict cyclic permutations, $T^a$ are the generators of the Lie algebra. As seen, the full amplutide depends on the momenta $p_i$, helicities $h_i$ and color configurations $a_i$ of all $n$ gluons. The $A_n^{tree}$ objects are not defined yet, these are the so called partial amplitudes and it has to be noticed that they do not depend on any color anymore. The whole color part of the amplitude is carried out into traces of generators and their permutations. Indeed the partial amplitudes still depend on the momenta and helicities, but in an ordered fashion. They recieve contributions only from Feynman diagrams with a particular ordering of gluons. This means that the partial amplitude are color ordered by construction, they need a fixed ordering of external legs. In literature they are also called color ordered amplitudes, dual amplitudes or primitive amplitudes (if one deos not consider loops).
+where $n$ is the number of involved gluons, $g$ is the strong coupling constant, $S_n$ is the symmetric group conststing of all permuatations of $n$ objects, $Z_n$ is the cyclic group consisting of only cyclic permutations of $n$ objects, $S_n/Z_n$ sweeps out all distict cyclic permutations and consists of $(n - 1)!$ elements, $T^a$ are the generators of the Lie algebra. As seen, the full amplutide depends on the momenta $p_i$, helicities $h_i$ and color configurations $a_i$ of all $n$ gluons. The $A_n^{tree}$ objects are not defined yet, these are the so called partial amplitudes and it has to be noticed that they do not depend on any color anymore. The whole color part of the amplitude is carried out into traces of generators and their permutations. Indeed the partial amplitudes still depend on the momenta and helicities, but in an ordered fashion. They recieve contributions only from Feynman diagrams with a particular ordering of gluons. This means that the partial amplitude are color ordered by construction, they need a fixed ordering of external legs. In literature they are also called color ordered amplitudes, dual amplitudes or primitive amplitudes (if one does not consider loops).
 
-To construct the aprtial aplitudes, there is now a new set of Feynman rules for this: the color ordered Feynman rules (see section \ref{sec:cofrules}). Notice that, the new Feynman rules now do not depend on any color anymore (no $f^{abc}$ or $T^a$).
+To construct the partial aplitudes, there is now a new set of Feynman rules for this: the color ordered Feynman rules (see section \ref{sec:cofrules}). Notice that, the new Feynman rules now do not depend on any color anymore (no $f^{abc}$ or $T^a$).
 
 \end{definition}
 
 \section{Berends-Giele current}
+\label{sec:bgcurrent}
 
 We are now ready to formulate the problem. The goal is to calculate the partial amplitude of $n$ gluons scattering at tree level. The recursion idea is the following.
 
 \subsection{Recursion idea}
 
-We define an auxiliary quantity called $J^{\mu}$ which we can contract with a approprate polarisation vector to obtain the partial amplitude. $J^{\mu}$ called the Berends-Giele-current of off-shell current and it consists of the sum of all color ordered Feynman graphs
+We define an auxiliary quantity called $J^{\mu}$ which we can contract with a appropriate polarisation vector to obtain the partial amplitude. $J^{\mu}$ is called the Berends-Giele current or off-shell current and it consists of the sum of all color ordered Feynman graphs
 
 \begin{align*}
     \begin{gathered}
@@ -872,21 +890,21 @@ We define an auxiliary quantity called $J^{\mu}$ which we can contract with a ap
     \end{gathered}.
 \end{align*}
 
-The off-shell propagator is also included in $J^{\mu}$. A pictorial representation of $J^{\mu}$ can be seen in figure \ref{fig:recursion}.
+The off-shell propagator of the external leg $\mu$ is also included in $J^{\mu}$. A pictorial representation of $J^{\mu}$ can be seen in figure \ref{fig:recursion}.
 
 \begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.4,natwidth=1079,natheight=359]{rec.png}
-\caption{Graphical representation of the recursion relation for the off-shell current $J^{\mu}$.}
-\label{fig:recursion}
-\end{center}
+    \begin{center}
+        \includegraphics[scale=0.4,natwidth=1079,natheight=359]{rec.png}
+        \caption{Graphical representation of the recursion relation for the off-shell current $J^{\mu}$.}
+        \label{fig:recursion}
+    \end{center}
 \end{figure}
 
-The image can be understood as follows. When we follow the off-shell leg $\mu$ into the current, we could approach a $3$-vertex or a $4$-vertex.
+The image can be understood as follows. When we follow the off-shell leg $\mu$ into the current, we could approach either a $3$-vertex or a $4$-vertex.
 
-If it's a $3$-vertex, then the remaining external legs from $1$ to $n$ must be split into two subsets to connect the next current to it. Since the diagrams are color ordered, we cannot split the set of $n$ legs into two arbitrary sets. The sets must not be empty and must consist of only consequent numbers - this follows from the color ordering. So there are $n$ possibilities to split them. If we therefore sum over these $n$ possibilities we get the first sum in the term of figure \ref{fig:recursion}.
+If it's a $3$-vertex, then the remaining external legs from $1$ to $n$ must be split into two subsets to connect the next current to it. Since the diagrams are color ordered, we cannot split the set of $n$ legs into two arbitrary sets. The sets must not be empty and must consist of only consequent numbers - this follows from the color ordering. So there are $n$ possibilities to split the set. If we therefore sum over these $n$ possibilities we get the first sum in the term of figure \ref{fig:recursion}.
 
-If it's a $4$-vertex, then the remaining external legs must be split into three subsets. The rules for the subsets are the same as for the $3$-vertex. We therefore have $n(n-1)$ possitbilities. This can be written in terms of a double sum over two indices $i$ and $j$ and we obtain the second term in figure \ref{fig:recursion}.
+If it's a $4$-vertex, then the remaining external legs must be split into three subsets. The rules for the subsets are the same as for the $3$-vertex. We therefore have $n(n-1)$ possibilities. This can be written in terms of a double sum over two indices $i$ and $j$ and we obtain the second sum in figure \ref{fig:recursion}.
 
 Therfore the current can be written as
 
@@ -904,18 +922,20 @@ where the $V_i$ are the colour ordered gluon self interaction vertices (see appe
     V_4^{\mu \nu \rho \sigma} &= \frac{i}{2} \left( 2 \eta^{\mu \rho} \eta^{\nu \sigma} - \eta^{\mu \nu} \eta^{\rho \sigma} - \eta^{\mu \sigma} \eta^{\nu \rho}  \right),
 \end{align}
 
-and the currents with only one gluon are the corresponding polarisation vectors
+and the currents with only one gluon are the corresponding polarisation vectors (see equation \eqref{eq:polvecs})
 
 \begin{subequations}
     \begin{align}
         &J^{\mu}(i^{+}) = \varepsilon_{+}^{\mu}(p_i,q_i) = \frac{1}{\sqrt{2}} \frac{ \langle q_i | \sigma^{\mu} | p_i \rbrack }{ \langle q_i p_i \rangle }, 
-        &J_{\mu}(i^{+}) = \varepsilon_{+\mu}(p_i,q_i) = \frac{1}{\sqrt{2}} \frac{ \langle q_i | \sigma_{\mu} | p_i \rbrack }{ \langle q_i p_i \rangle }, \\
+        &J_{\mu}(i^{+}) = \varepsilon_{+\mu}(p_i,q_i) = \frac{1}{\sqrt{2}} \frac{ \langle q_i | \sigma_{\mu} | p_i \rbrack }{ \langle q_i p_i \rangle }, \label{eq:rec_end_a} \\
         &J^{\mu}(i^{-}) = \varepsilon_{-}^{\mu}(p_i,q_i) = - \frac{1}{\sqrt{2}} \frac{ \lbrack q_i | \overline{\sigma}^{\mu} | p_i \rangle }{ \lbrack q_i p_i \rbrack }, 
-        &J_{\mu}(i^{-}) = \varepsilon_{-\mu}(p_i,q_i) = - \frac{1}{\sqrt{2}} \frac{ \lbrack q_i | \overline{\sigma}_{\mu} | p_i \rangle }{ \lbrack q_i p_i \rbrack }.
+        &J_{\mu}(i^{-}) = \varepsilon_{-\mu}(p_i,q_i) = - \frac{1}{\sqrt{2}} \frac{ \lbrack q_i | \overline{\sigma}_{\mu} | p_i \rangle }{ \lbrack q_i p_i \rbrack }. \label{eq:rec_end_b}
     \end{align}
 \end{subequations}
 
-Notice that, the off-shell current $J^{\mu}$ is not gauge invariant - it depends on the reference momenta $q_i$. The question now is how to get the partial amplitude with this current? Partial amplitudes with $n+1$ external legs are obtained by calculating $J_{\mu}(1^{\pm}, \dots, n^{\pm})$ for $n$ external legs. Then the off-shell propagator is cut off. The remaining expression is contracted with the $n+1$-th polarisation vectors $\epsilon_{\pm}^\mu(p_{n+1}, q_{n+1})$. This process is called LSZ-reduction \cite{lsz55}. the full amplitude can be obtained by applying equation \eqref{eq:decomp}.
+Notice that, the off-shell current $J^{\mu}$ is not gauge invariant - it depends on the reference momenta $q_i$. The question now is how to get the partial amplitude with this current? Partial amplitudes with $n+1$ external legs are obtained by calculating $J_{\mu}(1^{\pm}, \dots, n^{\pm})$ for $n$ external legs. Then the off-shell propagator $\frac{-i}{P_{1,n}^2}$ is cut off. The remaining expression is contracted with the $(n+1)$-th polarisation vectors $\epsilon_{\pm}^\mu(p_{n+1}, q_{n+1})$. This process is called LSZ-reduction \cite{lsz55}. The full amplitude can be obtained by applying equation \eqref{eq:decomp}.
+
+\subsection{Special cases}
 
 \begin{prop}
 \label{prop:Jppp}
@@ -1059,7 +1079,7 @@ Notice that, the off-shell current $J^{\mu}$ is not gauge invariant - it depends
 
 \begin{proof}
 
-    The proof is given by induction. We begin with the case $n=2$ which will be needed for the base case $n=3$:
+    The proof is given by induction. We begin with the base case $n=2$:
 
     \begin{align*}
         J^{\mu}(1^{-}, 2^{+}) &= \frac{-i}{P_{1,2}^2} V_3^{\mu \nu \rho}(P_{1,1}, P_{2,2}) J_{\nu}(1^{-}) J_{\rho}(2^{+}) \\
@@ -1086,16 +1106,6 @@ Notice that, the off-shell current $J^{\mu}$ is not gauge invariant - it depends
     \begin{align}
         J^{\mu}(1^{-}, 2^{+}) = 0. \label{eq:caseneq2}
     \end{align}
-
-    Let's look at the $n=3$ case,
-
-    \begin{align*}
-        J^{\mu}(1^{-}, 2^{+}, 3^{+}) = \frac{-i}{P_{1,3}^2} \Biggl[ &V_3^{\mu \nu \rho}(P_{1,1}, P_{2,3}) J_{\nu}(1^{-}) J_{\rho}(2^{+}, 3^{+}) \\
-        &+V_3^{\mu \nu \rho}(P_{1,2}, P_{3,3}) J_{\nu}(1^{-}, 2^{+}) J_{\rho}(3^{+}) \\
-        &+V_4^{\mu \nu \rho \sigma} J_{\nu}(1^{-}) J_{\rho}(2^{+}) J_{\sigma}(3^{+}) \Biggr].
-    \end{align*}
-
-    The second $V_3$ term vanishes, because it is the $n=2$ case above. TODO: rest
 
     Now, we perform the induction step:
 
@@ -1244,9 +1254,10 @@ Notice that, the off-shell current $J^{\mu}$ is not gauge invariant - it depends
 
 \end{proof}
 
-\subsection{Parke Taylor formula}
+\section{Parke Taylor formula}
+\label{sec:pt}
 
-Vector particles such as gluons do not have a conserved helicity. The most helicity violating amplitudes are zero at tree level. The first non-zero amplitudes are when two helicities have the opposite sign of the other $n-2$ gluons. These amplitudes are called MHV amplitudes (maximally helicity violating).
+Vector particles such as gluons do not have a conserved helicity. The most helicity violating amplitudes are zero at tree level. The first non-zero amplitudes are when the helicities of two gluons have the opposite sign of the helicities of the other $n-2$ gluons. These amplitudes are called MHV amplitudes (maximally helicity violating).
 
 \begin{theorem}[Parke Taylor \cite{pt86}]
 
@@ -1256,12 +1267,12 @@ The tree-level amplitude for the first two gluons with negative helicity and the
     A_n^{tree}(1^{-}, 2^{-}, 3^{+}, \dots , n^{+}) = i \frac{\langle 12 \rangle^4}{\langle 12 \rangle \cdots \langle n1 \rangle}.
 \end{align}
 
-This formula was first speculated by Parke and Taylor and also numerically proven up to $n=6$. It was first prooven by Berends and Giele \cite{bg88recursive}.
+This formula was first speculated by Parke and Taylor and also numerically proven up to $n=6$. It was first proofed by Berends and Giele \cite{bg88recursive}.
 
 \end{theorem}
 
 \begin{proof}
-To obtain amplitudes out of off-shell currents $J_{\mu}$, we need to multiply the current by $i P_{1,n}^2$ and then contract it with an appropriate polarisation vector $\varepsilon^{\mu}$ which is on the mass-shell. Multiplication by $i P_{1,n}^2$ is needed, because the off-shell current is defined to include the propagator of external off-shell leg $\mu$. In this way we could also achieve amplitudes with external quarks, instead of gluons. However, we then have $p_{n+1}^2 = P_{1,n}^2 = 0$. Therefore, we begin with
+To obtain amplitudes out of off-shell currents $J_{\mu}$, we need to multiply the current by $i P_{1,n}^2$ and then contract it with an appropriate polarisation vector $\varepsilon^{\mu}$ which is on the mass-shell. Multiplication by $i P_{1,n}^2$ is needed, because the off-shell current is defined to include the propagator of external off-shell leg $\mu$. However, we then have $p_{n+1}^2 = P_{1,n}^2 = 0$. Therefore, we begin with
 
 \begin{align}
     A_n^{tree}(&1^{-}, 2^{+}, \dots , n^{+}, (n+1)^{-}) \\
@@ -1269,7 +1280,7 @@ To obtain amplitudes out of off-shell currents $J_{\mu}$, we need to multiply th
     &= - i P_{1,n}^2 \frac{1}{\sqrt{2}} \frac{ \lbrack q_{n+1} | \overline{\sigma}^{\mu} | p_{n+1} \rangle }{ \lbrack q_{n+1}, p_{n+1} \rbrack } \frac{ \bra{1} \sigma_{\mu} \slashed{P}_{2,n} \ket{1} }{ \sqrt{2} \langle 12 \rangle \cdots \langle n1 \rangle } \sum_{m=3}^{n} \frac{ \bra{1} \slashed{p}_m \slashed{P}_{1,m} \ket{1} }{ P_{1,m-1}^2 P_{1,m}^2 }
 \end{align}
 
-We used proposition \ref{prop:Jmppp} to express $J_{\mu}$. The $\slashed{P}_{2,n} \ket{1}$ in the middle term, can actually the written as $\slashed{P}_{1,n} \ket{1}$ because the $\ket{i}$ are solutions to the massless Dirac equation, $\slashed{p} \ket{p} = 0$. We can also use \eqref{eq:ijji} switch $q$ and $p$ in the numerator of the polarisation vector. Since $P_{1,n}^2 = 0$, all terms in the sum vanish except when $m=n$ - in this case $P_{1,n}^2$ is cancelled from the denominator.
+We used proposition \ref{prop:Jmppp} to express $J_{\mu}$. The $\slashed{P}_{2,n} \ket{1}$ in the middle term, can actually the written as $\slashed{P}_{1,n} \ket{1}$ because the $\ket{i}$ are solutions to the massless Dirac equation, $\slashed{p} \ket{p} = 0$. We can also use \eqref{eq:ijji} to switch $q$ and $p$ in the numerator of the polarisation vector. Since $P_{1,n}^2 = 0$, all terms in the sum vanish except when $m=n$. In this case $P_{1,n}^2$ is cancelled from the denominator.
 
 Next, we evaluate
 
@@ -1314,7 +1325,7 @@ where we have used \eqref{eq:ij} in the last step. Applying the Fierz identity \
     &= i \frac{ \langle 1,n+1 \rangle^4 }{ \langle 12 \rangle \cdots \langle n+1,1 \rangle }.
 \end{align}
 
-In the last step we multiplied by $1$ to get the desired structure of the Parke Taylor formula. Notice that gluons with negative helicities, $1$ and $n+1$, are adjacent. The formula for $n$ gluons can therefore also be written as
+In the last step we multiplied by $1$ to get the desired structure of the Parke Taylor formula. Notice that gluons with negative helicities - gluon $1$ and gluon $n+1$ -  are adjacent. The formula for $n$ gluons can therefore also be written as
 
 \begin{align}
     A_n^{tree}(&1^{-}, 2^{-}, 3^{+}, \dots , n^{+}) = i \frac{ \langle 12 \rangle^4 }{ \langle 12 \rangle \cdots \langle n1 \rangle },
@@ -1333,16 +1344,19 @@ Notice that, the general Parke Taylor formula reads
 where $j$ and $k$ may not be adjacent.  
 
 \section{Implementation}
+\label{sec:implementation}
 
-The implementation was done in Python using various helper classes from the libraries NumPy \cite{numpy} and SciPy \cite{scipy}.
+The implementation was done in Python using various helper classes from the libraries NumPy \cite{numpy} and SciPy \cite{scipy}. For the full code, please refer to the GitHub repository \cite{github}.
 
 \subsection{Conventions}
 
 I defined 4-vectors with their index up $v^{\mu}$ as row vectors. This corresponds to two dimensional arrays of the form \code{[[$\code{v}^{\code{0}}$, $\code{v}^{\code{1}}$, $\code{v}^{\code{2}}$, $\code{v}^{\code{3}}$]]}. On the other hand, 4-vectors with their index down $w_{\mu}$ are defined as column vectors and two dimensional arrays of the form \code{[[$\code{w}^{\code{0}}$], [$\code{w}^{\code{1}}$], [$\code{w}^{\code{2}}$], [$\code{w}^{\code{3}}$]]}. Using this convention, I can simply perform a dot product between these vectors to obtain a contraction of two indicies.
 
-Since function names in Python can only consist of alphanumeric characters and underscores \code{\_}, I used for variables with their index down $v_{\mu}$ names as \code{v\_mu} and with index up $w^{\mu}$ names of the form \code{w\_\_mu}, such that $v^{\mu} w_{\mu}$ equals \code{v\_\_mu.dot(w\_mu)}.
+Since function and variable names in Python can only consist of alphanumeric characters and underscores \code{\_}, I used for variables with their index down $v_{\mu}$ names as \code{v\_mu} and with index up $w^{\mu}$ names of the form \code{w\_\_mu} (two underscores), such that $v^{\mu} w_{\mu}$ equals \code{v\_\_mu.dot(w\_mu)}.
 
 \subsection{Particle class}
+
+The first thing I've implemented was a class called \code{Particle(h, p, q)} with a constructor expecting arguments \code{h} for the helicity, \code{p} for an array with 4 entries representing the four momentum of the particle and \code{q} also an array with 4 entries to specify the reference momentum.
 
 \begin{lstlisting}[language=Python, caption=Particle class definiton]
 class Particle:
@@ -1362,12 +1376,12 @@ class Particle:
         ):
 \end{lstlisting}
 
-The first thing I've implemented was a class called \code{Particle(h, p, q)} with a constructor with arguments \code{h} for the helicity, \code{p} for an array with 4 entries representing the four momentum of the particle and \code{q} also an array with 4 entries to specify the reference momentum. The class contains the following properties:
+The class contains the following properties:
 
 \begin{itemize}
-  \item \code{eps\_a} returning the polarisation vectors $\varepsilon_{\mu}$ as a column vector,
-  \item \code{eps\_\_a} returning the polarisation vectors $\varepsilon^{\mu}$ as a row vector,
-  \item \code{lambda\_pa} returning the spinor $\lambda_{p \alpha}$m as a column vector,
+  \item \code{eps\_a} returning the polarisation vector $\varepsilon_{\mu}$ as a column vector,
+  \item \code{eps\_\_a} returning the polarisation vector $\varepsilon^{\mu}$ as a row vector,
+  \item \code{lambda\_pa} returning the spinor $\lambda_{p \alpha}$ as a column vector,
   \item \code{lambda\_p\_\_a} returning the spinor $\lambda_p^{\alpha}$ as a row vector,
   \item \code{lambda\_tilda\_pa\_dot} returning the spinor $\tilde{\lambda}_{p \dot{\alpha}}$ as a row vector,
   \item \code{lambda\_tilda\_p\_\_a\_dot} returning the spinor $\tilde{\lambda}_{p}^{\dot{\alpha}}$ as a column vector.
@@ -1375,25 +1389,160 @@ The first thing I've implemented was a class called \code{Particle(h, p, q)} wit
 
 \subsection{Berends-Giele current}
 
-The off-shell current is defined as a function of an array of \code{Particle} objects:
+My first implementation as of the date of my presentation was a pure Python function that called itself exactly as equation \eqref{eq:recursion}. Also I had used for loops for contractions of the Lorentz-indices $\mu$, $\nu$, $\rho$ and $\sigma$, which ended up in a nesting of up to $6$ for loops for the double sum in equation \eqref{eq:recursion}. This slowed the whole calculation down. After refactoring the code, I was able gain a performance increase of a factor of about $3$ by using the \code{einsum()} method of NumPy for the contractions. This function loops over given indices in C such that array elements are accessed in C rather than Python. For this I had to implement the 3- and 4-vertex as a 3- and a 4-dimensional array respectively (\code{g} is the metric and \code{i}, \code{j}, \code{k} and \code{l} are the Lorentz indices):
 
-\begin{lstlisting}[language=Python, caption=Berends-Giele current]
-def J__a(gluons, rec = 1):
-    # Off-shell current J^mu(1, ..., n)
+\begin{lstlisting}[language=Python]
+def v3(P, Q):
+    # Feynman rule for the 3-gluon vertex
     #
-    # @param array gluons   array of gluon Particle objects
-    # @param int rec        recursion depth
-    # @return array         row vector
+    # @param array P      4-momentum of gluon 1
+    # @param array Q      4-momentum of gluon 2
+    # @return ndarray     the vertex factor
     #
+    #         P,i
+    #          |
+    #         / \
+    # -(P+Q),k   Q,j
+    #
+    return (1j/np.sqrt(2))*(
+            np.einsum('jk,i', g, P-Q)
+        - 2*np.einsum('ij,k', g, P)
+        + 2*np.einsum('ki,j', g, Q)
+    )
+
+def v4():
+    # Feynman rule for the 4-gluon vertex
+    #
+    # @return ndarray     the vertex factor
+    #
+    #  i    j
+    #    \/
+    #    /\
+    #  l    k
+    # 
+    return 0.5j*(
+        2*np.einsum('ik,jl', g, g)
+        - np.einsum('ij,kl', g, g)
+        - np.einsum('il,jk', g, g)
+    )
 \end{lstlisting}
 
-To calculate the current $J^{\mu}$ for $n$ gluons one has to create an array with $n$ entries of all \code{Particle} objects a call \code{J\_\_a} with that array as only argument. The \code{rec} argument is just there to keep track of the recursion depth and to append the propagator only in steps that are deeper in the recursion that $1$.
+In further optimization, I decided to create an object for the off-shell current, such that I was able to store intermediate results, to not calculate recursive steps multiple times. Therefore, the off-shell current is now defined as a class whose constructor expects an array of \code{Particle} objects:
+
+\begin{lstlisting}[language=Python, label=lst:constructor, caption=Berends-Giele current object]
+class BGCurrent:
+    #
+    # @param BGCurrent self     reference to the class instance
+    # @param Particle[] gluons  array of gluonic Particle objects
+    # @return BGCurrent         class instance
+    #
+    def __init__ (self, gluons):
+        self.gluons = gluons
+        self.n = gluons.size
+        self.regJ = np.zeros((self.n, self.n, 4), dtype=complex)
+        self.memoryJ = np.zeros((self.n, self.n), dtype=bool)
+        self.vertex4 = v4()
+        self.P = np.array([g.p for g in self.gluons])
+\end{lstlisting}
+
+When instantiating the class, an array called \code{regJ} of dimensions $n \times n \times 4$ is initialized to store values of $J^{\mu}(a^{\pm}, \dots, b^{\pm})$ with starting index $a$ and ending index $b$ ($0 \leq a < b \leq n$) as soon as they are calculated. Later when the same current is needed in another recursion step, the register \code{regJ} is probed if the value was already calculated before. In such a case the stored result is returned instead of a recalculation. What this means is that each $J^{\mu}$ appearing in the recursive formula is calculated exactly once and reused in later steps. This made a significant performance improvement of a factor of about $500$ in the $n=10$ case altough in exchange of some system memory. The allocated memory for the \code{regJ} array is \cite{mem}
+
+\begin{align*}
+    128 + 64 n^2 \text{ bytes}
+\end{align*}
+
+which is about $6.4$ MB in the $n=10$ case and scales quadratically in $n$ - the number of gluons.
+
+To calculate the current $J^{\mu}$ for $n$ gluons one has to create an array with $n$ entries of \code{Particle} objects and instantiate the object with that array as argument. After that one has to call \code{J\_\_a()} with no argument.
+
+\begin{lstlisting}[language=Python, caption=Recursion step method]
+    def J__a(self, a = 0, b = None, rec = 1):
+        #
+        # @param BGCurrent self    reference to the class instance
+        # @param int a             starting index
+        # @param int|None b        ending index, defaults to n
+        # @param int rec           recursion depth
+        # @return array            the current as a 4-vector
+        #
+\end{lstlisting}
+
+The \code{rec} argument is just there to keep track of the recursion depth and to append the propagator only in steps that are deeper in the recursion than $1$.
+
+If the starting and the ending index are equal, the function returns the polarisation vector of the \code{a}-th \code{Particle} object:
+
+\begin{lstlisting}[language=Python]
+# recursion base
+if a == b:
+    return self.gluons[a].eps__a
+\end{lstlisting}
+
+This is the end of the recursion as given in equations \eqref{eq:rec_end_a} and \eqref{eq:rec_end_b}. The $3$-vertex sum and the $4$-vertex double sum are written as:
+
+\begin{lstlisting}[language=Python, label=lst:loops, caption=Sums of the interaction vertices]
+# 1st recursion step from i=0 to n-2
+for i in range(a, b):
+    J_nu  = self.J_a(a, i, rec+1)
+    J_rho = self.J_a(i+1, b,  rec+1)
+    v = v3(self.P_ij(a, i), self.P_ij(i+1, b))
+    self.regJ[a,b] += np.einsum('mnr,n,r->m', v, J_nu, J_rho)
+
+# 2nd recursion step from i=0 to n-3 (including n-3) ...
+for i in range(a, b-1):
+    J_nu = self.J_a(a, i, rec+1)
+    # ... and j=i+1 to n-2 (including n-2)
+    for j in range(i+1, b):
+        J_rho   = self.J_a(i+1, j, rec+1)
+        J_sigma = self.J_a(j+1, b, rec+1)
+        self.regJ[a,b] += np.einsum('mnrs,n,r,s->m', self.vertex4, J_nu, J_rho, J_sigma)
+\end{lstlisting}
+
+These 3 loops are still implemented using native for loops in Python. The $3$-vertex has to be calculated in each step, since it depends on the momenta $P_{0,i}$ and $P_{i+1,n}$. The $4$-vertex on the other hand is a constant and is calculated once for the whole process in the constructor (see listing \ref{lst:constructor}).
 
 \subsection{Parke Taylor formula}
 
+The implementation of the Parke-Taylor formula was straight forward. I've implemented it also as a function of an array of \code{Particle} objects. Since the Parke-Taylor formula only gives a result for MHV amplitudes, I check the array for exactly $2$ negative helicities, else the function returns \code{NaN} (not a number). In the correct case, the two negative helicities are extracted and the spinor products are taken. These products where implemented as in definition \ref{def:spinor_product} as functions of two \code{Particle} objects. Since for the denominator there is a for loop, the complexity scales linearly in $n$.
+
+\subsection{Comparison}
+
+In figure \ref{fig:compare} a performance comparison of the two algorithms can be found. The two formulas are called with the same set of \code{Particle} objects (with the same momenta and helicities). The number of gluons $n$ is iterated from $4$ to $110$ with increasing steps and plotted against the time needed. For $n=100$ gluons it takes about $90.7$ seconds with the recursion, whereas the Parke-Taylor calculation needs only $0.0019$ seconds.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[scale=0.7,natwidth=1079,natheight=359]{comparison.eps}
+        \caption{Comparison of the two formulas to calculate tree level partial amplitudes with $n$ gluons. The $x$ axis represents the number of scattering gluons involved in the calculation, whereas the $y$ axis shows the time needed for the calculation on my laptop (an Intel(R) Core(TM) i5-6200U CPU at 2.30GHz with 4 cores. As described in section \ref{sec:parallel} only one of the 4 cores was used in the calculation).}
+        \label{fig:compare}
+    \end{center}
+\end{figure}
+
+An observation I've encountered, was that with increasing number of gluons $n$ the results of the two formulae deviate sometimes by a small amount. For example in the $n=105$ case the results where
+
+\begin{align*}
+    A_{BG} &= ( 2.5090994313359261 - 4.4065818656235933 i ) *10^{-6}, \\
+    A_{PT} &= ( 2.4904251975961678 - 4.3896288844922791 i ) *10^{-6},
+\end{align*}
+
+where $A_{BG}$ and $A_{PT}$ are the amplitudes recieved from the Berends-Giele and the Parke-Taylor formula respectively. These deviations come from rounding errors, when adding a small float number to a float number bigger in many magnitudes. The implementation of the float datatype in most programming languages exhibit that problem \cite{goldberg1991}. My implementation does not handle such problems, since the deviations are in the $10^{-7}$ scale for $n=105$.
+
+\subsection{Further improvements}
+\label{sec:improvements}
+
+There are multiple things that can further improve the performance of the Berends-Giele current.
+
+\subsubsection{Parallel processing}
+\label{sec:parallel}
+
+Since the main loops in listing \ref{lst:loops} are not dependent of each other, a parallel processing could be taken into account. Each step adds an additional amount to the total current. So if only considering one iteration the inner loops can be processed in any order - ideal for a parallel approach. The improvement would approximately be a factor of the number of CPU cores.
+
+\subsubsection{C loops}
+To utilize parallel processing the loops need to be rewritten in C first, because Python uses a GIL (global interpreter lock) mechanism, that prevents multiple parallel threads to run concurrently.
+
+\subsubsection{C arrays}
+Each iterative step in the loops do access multiple arrays in reading as well as writing mode. Python arrays as well as NumPy arrays are slow (but convenient) to access single elements at a time. Some NumPy functions are nonetheless as fast as C in iterating over arrays (for example the \code{einsum()} method), but not in the case of how the Berends-Giele current is implemented above. Still there are 3 remaining loops in listing \ref{lst:loops}, where optimisation can be achieved when utilizing C arrays.
+
 \section{Summary}
 
-TODO
+The Berends-Giele current is a powerful recursive method to calculate general tree level scattering amplitudes in perturbative QCD. On the other hand, the spinor helicity formalism produces very compact results for specific problems such as MHV amplitudes in the form of the Parke-Taylor formula. These formulas where achieved by decomposing the full amplitude into color independent parts, considering only the color component of the Feynman rules to treat color separately. We were able to split the full problem into smaller problems with simpler kinematic properties. These could then be handled recursively.
+The implementation was mainly governed by improving the performance which is a heavily language-specific task. A professional implementation would at least incorporate the improvements addressed in section \ref{sec:improvements}. The Berends-Giele current can also be generalised to all Feynman rules - not only the two gluon vertices - to calculate more general amplitudes including quarks in a recursive way (for example $n-2$ gluons and $2$ quarks) \cite{badger2013}.
 
 \newpage
 
@@ -1431,7 +1580,7 @@ The Feynman rules for QCD in Feynman gauge are \cite{mangano99}
             \fmf{gluon}{g2,v}
             \fmflabel{$q,c,\rho$}{g2}
         \end{fmfgraph*}
-        }
+-        }
         \end{fmffile}
     \end{gathered}
     &= \frac{i g}{\sqrt{2}} f^{abc} \left[ \eta^{\nu \rho} (p-q)^{\mu} + \eta^{\rho \mu} (q-k)^{\nu} + \eta^{\mu \nu} (k-p)^{\rho} \right], \\
@@ -1689,9 +1838,8 @@ The color ordered Feynman rules for QCD in Feynman gauge are \cite{dixon1996}
 \end{align*}
 
 \subsection{Code}
+\label{sec:code}
 
-All code used in this report can be found in the GitHub repository \cite{github}
-
-\label{sec:frules}
+All code used in this report is open source and can be found in the GitHub repository \cite{github}
 
 \end{document}

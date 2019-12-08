@@ -1,15 +1,18 @@
-This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  17 NOV 2019 22:55
-**diagram_co_gluon_prop.mf
+This is METAFONT, Version 2.7182818 (TeX Live 2015/Debian) (preloaded base=mf 2018.11.8)  8 DEC 2019 15:48
+**\mode:=localfont; mag:=1; input diagram_co_gluon_prop
 (diagram_co_gluon_prop.mf (/usr/share/texmf/metafont/feynmf/feynmf.mf)
-feynmf: 1
-:1:\fmfL(10,6.5,t){$p$}%
-:1:\fmfL(26,12.5,l){$\nu $}%
-:1:\fmfL(-6,12.5,r){$\mu $}% [1] ) 
+:1:\fmfL(9.99734,6.43646,t){$p$}%
+:1:\fmfL(26.08504,12.5268,l){$\nu $}%
+:1:\fmfL(-6.09033,12.5268,r){$\mu $}% [1] ) 
 Here is how much of METAFONT's memory you used:
- 613 strings out of 5274
- 7178 string characters out of 69975
- 39369 words of memory out of 5000000
+ 607 strings out of 5274
+ 7196 string characters out of 69975
+ 30016 words of memory out of 5000000
  1376 symbolic tokens out of 9500
- 13i,67n,56r,26p,118b stack positions out of 300i,300n,1000r,150p,200000b
+ 13i,67n,56r,26p,147b stack positions out of 300i,300n,1000r,150p,200000b
+ 
+(You used 2w,2h,1d,1i,0l,0k,0e,0p metric file positions
+  out of 256w,16h,16d,64i,15000l,2500k,256e,60p)
 
-Output written on diagram_co_gluon_prop.2602gf (1 character, 3984 bytes).
+Font metrics written on diagram_co_gluon_prop.tfm.
+Output written on diagram_co_gluon_prop.600gf (1 character, 728 bytes).

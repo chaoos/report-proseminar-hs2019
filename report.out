@@ -6,14 +6,20 @@
 \BOOKMARK [2][-]{subsection.3.2}{Color decomposition}{section.3}% 6
 \BOOKMARK [1][-]{section.4}{Berends-Giele current}{}% 7
 \BOOKMARK [2][-]{subsection.4.1}{Recursion idea}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.2}{Parke Taylor formula}{section.4}% 9
-\BOOKMARK [1][-]{section.5}{Implementation}{}% 10
-\BOOKMARK [2][-]{subsection.5.1}{Conventions}{section.5}% 11
-\BOOKMARK [2][-]{subsection.5.2}{Particle class}{section.5}% 12
-\BOOKMARK [2][-]{subsection.5.3}{Berends-Giele current}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.4}{Parke Taylor formula}{section.5}% 14
-\BOOKMARK [1][-]{section.6}{Summary}{}% 15
-\BOOKMARK [1][-]{section*.3}{Appendices}{}% 16
-\BOOKMARK [2][-]{subsection.Alph0.1}{QCD Feynman rules}{section*.3}% 17
-\BOOKMARK [2][-]{subsection.Alph0.2}{Color ordered QCD Feynman rules}{section*.3}% 18
-\BOOKMARK [2][-]{subsection.Alph0.3}{Code}{section*.3}% 19
+\BOOKMARK [2][-]{subsection.4.2}{Special cases}{section.4}% 9
+\BOOKMARK [1][-]{section.5}{Parke Taylor formula}{}% 10
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 11
+\BOOKMARK [2][-]{subsection.6.1}{Conventions}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.2}{Particle class}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.3}{Berends-Giele current}{section.6}% 14
+\BOOKMARK [2][-]{subsection.6.4}{Parke Taylor formula}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.5}{Comparison}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.6}{Further improvements}{section.6}% 17
+\BOOKMARK [3][-]{subsubsection.6.6.1}{Parallel processing}{subsection.6.6}% 18
+\BOOKMARK [3][-]{subsubsection.6.6.2}{C loops}{subsection.6.6}% 19
+\BOOKMARK [3][-]{subsubsection.6.6.3}{C arrays}{subsection.6.6}% 20
+\BOOKMARK [1][-]{section.7}{Summary}{}% 21
+\BOOKMARK [1][-]{section*.6}{Appendices}{}% 22
+\BOOKMARK [2][-]{subsection.Alph0.1}{QCD Feynman rules}{section*.6}% 23
+\BOOKMARK [2][-]{subsection.Alph0.2}{Color ordered QCD Feynman rules}{section*.6}% 24
+\BOOKMARK [2][-]{subsection.Alph0.3}{Code}{section*.6}% 25

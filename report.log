@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.11.8)  3 DEC 2019 18:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.11.8)  8 DEC 2019 15:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2012,12 +2012,73 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
+(/usr/share/texlive/texmf-dist/tex/latex/svg/svg.sty
+Package: svg 2012/09/05 v1.0 SVG inclusion and extraction
+
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks46
+\XKV@tempa@toks=\toks47
+)
+\XKV@depth=\count178
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen277
+\captionmargin@=\dimen278
+\captionwidth=\dimen279
+\caption@tempdima=\dimen280
+\caption@indent=\dimen281
+\caption@parindent=\dimen282
+\caption@hangindent=\dimen283
+)
+\c@ContinuedFloat=\count179
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
+)
+\c@KVtest=\count180
+\sf@farskip=\skip53
+\sf@captopadj=\dimen284
+\sf@capskip=\skip54
+\sf@nearskip=\skip55
+\c@subfigure=\count181
+\c@subfigure@save=\count182
+\c@lofdepth=\count183
+\c@subtable=\count184
+\c@subtable@save=\count185
+\c@lotdepth=\count186
+\sf@top=\skip56
+\sf@bottom=\skip57
+)
+(/usr/share/texlive/texmf-dist/tex/latex/import/import.sty
+Package: import 2009/03/23  v 5.1
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/transparent.sty
+Package: transparent 2007/01/08 v1.0 Transparency via pdfTeX's color stack (HO)
+
+)
+\SVG@out@width=\skip58
+\SVG@out@height=\skip59
+\c@svgfigure=\count187
+)
 (/usr/share/texlive/texmf-dist/tex/latex/tikzmark/tikzlibrarytikzmark.code.tex)
 (/usr/share/texlive/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
-\FN@temptoken=\toks46
-\footnotemargin=\dimen277
-\c@pp@next@reset=\count178
+\FN@temptoken=\toks48
+\footnotemargin=\dimen285
+\c@pp@next@reset=\count188
 Package footmisc Info: Declaring symbol style bringhurst on input line 855.
 Package footmisc Info: Declaring symbol style chicago on input line 863.
 Package footmisc Info: Declaring symbol style wiley on input line 872.
@@ -2036,16 +2097,16 @@ Package: xifthen 2015/11/05 v1.4.0 Extended ifthen features
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count179
-\calc@Bcount=\count180
-\calc@Adimen=\dimen278
-\calc@Bdimen=\dimen279
-\calc@Askip=\skip53
-\calc@Bskip=\skip54
+\calc@Acount=\count189
+\calc@Bcount=\count190
+\calc@Adimen=\dimen286
+\calc@Bdimen=\dimen287
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count181
-\calc@Cskip=\skip55
+\calc@Ccount=\count191
+\calc@Cskip=\skip62
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
@@ -2055,42 +2116,42 @@ Package: ifmtarg 2009/09/02 v1.2a check for an empty argument
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count182
+\etb@tempcnta=\count192
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
 )
-\doclicense@hsize=\skip56
+\doclicense@hsize=\skip63
 
 (/usr/share/texlive/texmf-dist/tex/latex/doclicense/doclicense-english.ldf
 File: doclicense-english.ldf 
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2015/03/04 v2.20.2
-\thm@style=\toks47
-\thm@bodyfont=\toks48
-\thm@headfont=\toks49
-\thm@notefont=\toks50
-\thm@headpunct=\toks51
-\thm@preskip=\skip57
-\thm@postskip=\skip58
-\thm@headsep=\skip59
-\dth@everypar=\toks52
+\thm@style=\toks49
+\thm@bodyfont=\toks50
+\thm@headfont=\toks51
+\thm@notefont=\toks52
+\thm@headpunct=\toks53
+\thm@preskip=\skip64
+\thm@postskip=\skip65
+\thm@headsep=\skip66
+\dth@everypar=\toks54
 )
-\c@definition=\count183
-\c@theorem=\count184
-\c@corollary=\count185
-\c@example=\count186
+\c@definition=\count193
+\c@theorem=\count194
+\c@corollary=\count195
+\c@example=\count196
 
 (/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2016/01/31 v5.1g context-sensitive quotations (JAW)
-\csq@reset=\count187
-\csq@gtype=\count188
-\csq@glevel=\count189
-\csq@qlevel=\count190
-\csq@maxlvl=\count191
-\csq@tshold=\count192
-\csq@ltx@everypar=\toks53
+\csq@reset=\count197
+\csq@gtype=\count198
+\csq@glevel=\count199
+\csq@qlevel=\count266
+\csq@maxlvl=\count267
+\csq@tshold=\count268
+\csq@ltx@everypar=\toks55
 
 (/usr/share/texlive/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2016/01/31 v5.1g csquotes generic definitions (JAW)
@@ -2103,39 +2164,23 @@ File: csquotes.cfg
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/ccicons/ccicons.sty
 Package: ccicons 2013/04/16 v1.5 LaTeX support for Creative Commons icons
-
-(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
-
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks54
-\XKV@tempa@toks=\toks55
-)
-\XKV@depth=\count193
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-)))
-(./report.aux
-
-LaTeX Warning: Label `sec:frules' multiply defined.
-
-)
+) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
+LaTeX Font Info:    ... okay on input line 88.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -2172,18 +2217,18 @@ LaTeX Font Info:    ... okay on input line 87.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box59
-Package hyperref Info: Link coloring OFF on input line 87.
+Package hyperref Info: Link coloring OFF on input line 88.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count194
+\c@section@level=\count269
 )
-LaTeX Info: Redefining \ref on input line 87.
-LaTeX Info: Redefining \pageref on input line 87.
-LaTeX Info: Redefining \nameref on input line 87.
+LaTeX Info: Redefining \ref on input line 88.
+LaTeX Info: Redefining \pageref on input line 88.
+LaTeX Info: Redefining \nameref on input line 88.
 
 (./report.out) (./report.out)
 \@outlinefile=\write6
@@ -2192,16 +2237,16 @@ LaTeX Info: Redefining \nameref on input line 87.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count195
-\scratchdimen=\dimen280
+\scratchcounter=\count270
+\scratchdimen=\dimen288
 \scratchbox=\box60
-\nofMPsegments=\count196
-\nofMParguments=\count197
+\nofMPsegments=\count271
+\nofMParguments=\count272
 \everyMPshowfont=\toks56
-\MPscratchCnt=\count198
-\MPscratchDim=\dimen281
-\MPnumerator=\count199
-\makeMPintoPDFobject=\count266
+\MPscratchCnt=\count273
+\MPscratchDim=\dimen289
+\MPnumerator=\count274
+\makeMPintoPDFobject=\count275
 \everyMPtoPDFconversion=\toks57
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -2223,27 +2268,30 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.13} into 
 your preamble.
- on input line 87.
+ on input line 88.
 
-\c@lstlisting=\count267
-LaTeX Font Info:    Try loading font information for U+msa on input line 90.
+\c@lstlisting=\count276
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Try loading font information for U+msa on input line 91.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 90.
+LaTeX Font Info:    Try loading font information for U+msb on input line 91.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 92--94
+Underfull \hbox (badness 10000) in paragraph at lines 93--95
 
  []
 
-<doclicense-CC-by-sa.pdf, id=85, 121.45375pt x 43.16125pt>
+<doclicense-CC-by-sa.pdf, id=109, 121.45375pt x 43.16125pt>
 File: doclicense-CC-by-sa.pdf Graphic file (type pdf)
 
 <use doclicense-CC-by-sa.pdf>
-Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 95.
+Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 96.
 (pdftex.def)             Requested size: 92.49939pt x 32.87137pt.
  (./report.toc)
 \tf@toc=\write7
@@ -2252,12 +2300,12 @@ Package pdftex.def Info: doclicense-CC-by-sa.pdf used on input line 95.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </usr/share/texlive/texmf-d
-ist/tex/latex/doclicense/images/doclicense-CC-by-sa.pdf>] [2]
-LaTeX Font Info:    Try loading font information for U+euf on input line 262.
+ist/tex/latex/doclicense/images/doclicense-CC-by-sa.pdf>] [2] [3]
+LaTeX Font Info:    Try loading font information for U+euf on input line 279.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [3]
+) [4]
 
 feynmf: File report_diagram_fabc1.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess report_diagram_fabc
@@ -2290,7 +2338,7 @@ feynmf: If dimension have changed, reprocess report_diagram_fabc3.mf and report
 
 \openout5 = `report_diagram_fabc3.t1'.
 
-(./report_diagram_fabc3.t1) [4]
+(./report_diagram_fabc3.t1)
 
 feynmf: File report_diagram_fierz1.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess report_diagram_fier
@@ -2323,7 +2371,7 @@ t.tex.
 
 \openout5 = `report_diagram_fierz3.t1'.
 
-(./report_diagram_fierz3.t1)
+(./report_diagram_fierz3.t1) [5]
 
 feynmf: File report_diagram_example_4g1.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess report_diagram_exam
@@ -2487,7 +2535,7 @@ report.tex.
 
 \openout5 = `report_diagram_example_ng2.t1'.
 
-(./report_diagram_example_ng2.t1) [5]
+(./report_diagram_example_ng2.t1) [6]
 
 feynmf: File report_diagram_ngluons.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess report_diagram_nglu
@@ -2508,14 +2556,13 @@ rt.tex.
 \openout5 = `report_diagram_ngluons.t1'.
 
 (./report_diagram_ngluons.t1)
-<./img/rec.png, id=210, 812.28468pt x 270.25969pt>
+<./img/rec.png, id=257, 812.28468pt x 270.25969pt>
 File: ./img/rec.png Graphic file (type png)
  <use ./img/rec.png>
-Package pdftex.def Info: ./img/rec.png used on input line 879.
+Package pdftex.def Info: ./img/rec.png used on input line 897.
 (pdftex.def)             Requested size: 324.90811pt x 108.10194pt.
- [6]
-[7 <./img/rec.png>]
-Overfull \hbox (17.41891pt too wide) in paragraph at lines 987--988
+ [7 <./img/rec.png>] [8]
+Overfull \hbox (17.41891pt too wide) in paragraph at lines 1007--1008
 []\OT1/cmr/m/n/9 The same ar-gu-ment also ap-plies to $\OML/cmm/m/it/9 ^^Q[]J[]
 \OT1/cmr/m/n/9 (\OML/cmm/m/it/9 i \OT1/cmr/m/n/9 + 1\OML/cmm/m/it/9 ; [] ; j\OT
 1/cmr/m/n/9 )\OML/cmm/m/it/9 J[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 j \OT1/cmr/m/n/
@@ -2524,23 +2571,60 @@ Overfull \hbox (17.41891pt too wide) in paragraph at lines 987--988
 T1/cmr/m/n/9 (\OML/cmm/m/it/9 i \OT1/cmr/m/n/9 +
  []
 
-[8] [9] [10] [11] [12] [13] [14]
+[9] [10] [11] [12] [13] [14]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 1347.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1368
+nput line 1361.
+ [15]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1382
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1368.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1382.
 
- [15] (./report.bbl)
-[16]
+ [16] [17]
+Package epstopdf Info: Source file: <./plots/comparison.eps>
+(epstopdf)                    date: 2019-12-08 15:47:10
+(epstopdf)                    size: 163664 bytes
+(epstopdf)             Output file: <./plots/comparison-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-12-08 15:47:25
+(epstopdf)                    size: 33655 bytes
+(epstopdf)             Command: <repstopdf --outfile=./plots/comparison-eps-con
+verted-to.pdf ./plots/comparison.eps>
+(epstopdf)             \includegraphics on input line 1511.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: pdflatex (file ./plots/comparison-eps-converted-to.pdf): PDF in
+clusion: found PDF version <1.7>, but at most version <1.5> allowed
+<./plots/comparison-eps-converted-to.pdf, id=503, 578.16pt x 433.62pt>
+File: ./plots/comparison-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./plots/comparison-eps-converted-to.pdf>
+Package pdftex.def Info: ./plots/comparison-eps-converted-to.pdf used on input 
+line 1511.
+(pdftex.def)             Requested size: 404.70924pt x 303.53192pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[18] [19 <./plots/comparison-eps-converted-to.pdf>] (./report.bbl
+Underfull \hbox (badness 10000) in paragraph at lines 71--76
+[]\OT1/cmr/m/n/9 SciPy (2008-2019).  In-ter-nal mem-ory lay-out of an ndar-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--76
+\OT1/cmr/m/n/9 ray.  []$\OT1/cmtt/m/n/9 https : / / docs . scipy . org / doc / 
+numpy / reference / arrays . ndarray . html #
+ []
+
+) [20]
 
 feynmf: File diagram_3gluon_vertex.tfm found.
 feynmf: Nevertheless, if the picture has changed, reprocess diagram_3gluon_vert
@@ -2780,29 +2864,31 @@ ort.tex.
 
 \openout5 = `diagram_co_fermion_prop.t1'.
 
-(./diagram_co_fermion_prop.t1) [17]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1695.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1695.
+(./diagram_co_fermion_prop.t1)
+Overfull \hbox (10.68558pt too wide) in paragraph at lines 1843--1844
+\OT1/cmr/m/n/9 All code used in this re-port is open source and can be found in
+ the GitHub repos-i-tory [[]] 
+ []
+
+[21]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1845.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1845.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1695.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1695.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1845.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1845.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 64D0FA00977650C7E6AC8C834FDE5C59;1215.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1695.
+(rerunfilecheck)             Checksum: 742BE9B01E448BC09A58BD28D83E7460;1608.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1845.
  ) 
 Here is how much of TeX's memory you used:
- 37523 strings out of 494910
- 831995 string characters out of 6179836
- 1068711 words of memory out of 5000000
- 40024 multiletter control sequences out of 15000+600000
- 15818 words of font info for 91 fonts, out of 8000000 for 9000
+ 38969 strings out of 494910
+ 857299 string characters out of 6179836
+ 1199006 words of memory out of 5000000
+ 41360 multiletter control sequences out of 15000+600000
+ 16126 words of font info for 92 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 69i,22n,89p,10403b,2151s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,22n,98p,10403b,2177s stack positions out of 5000i,500n,10000p,200000b,80000s
  <./diagram_co_fermion_prop.600pk> <./diagram_co_gluon_fermion_vertex_b.600pk
 > <./diagram_co_gluon_prop.600pk> <./diagram_co_gluon_fermion_vertex_a.600pk> <
 ./diagram_co_4gluon_vertex.600pk> <./diagram_co_3gluon_vertex.600pk> <./diagram
@@ -2816,32 +2902,33 @@ le_4g4.600pk> <./report_diagram_example_4g3.600pk> <./report_diagram_example_4g
 2.600pk> <./report_diagram_example_4g1.600pk> <./report_diagram_fierz3.600pk> <
 ./report_diagram_fierz2.600pk> <./report_diagram_fierz1.600pk> <./report_diagra
 m_fabc3.600pk> <./report_diagram_fabc2.600pk> <./report_diagram_fabc1.600pk></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/e
-ufm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm10.pfb>
-Output written on report.pdf (17 pages, 413707 bytes).
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+t9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
+fb>
+Output written on report.pdf (21 pages, 489581 bytes).
 PDF statistics:
- 629 PDF objects out of 1000 (max. 8388607)
- 549 compressed objects within 6 object streams
- 147 named destinations out of 1000 (max. 500000)
- 175 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 809 PDF objects out of 1000 (max. 8388607)
+ 718 compressed objects within 8 object streams
+ 232 named destinations out of 1000 (max. 500000)
+ 228 words of extra memory for PDF output out of 10000 (max. 10000000)
 

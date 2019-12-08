@@ -142,7 +142,8 @@ def masslessMomentum (p1 = None, p2 = None, p3 = None, gen = lambda: rand()):
 
 # Produces the Minkowski scalar product according to the metric [[metric]].
 def minkowskiDot (a, b):
-    return g[0][0]*a[0]*b[0] + g[1][1]*a[1]*b[1] + g[2][2]*a[2]*b[2] + g[3][3]*a[3]*b[3]
+    return a.dot(g).dot(b)
+    #return g[0][0]*a[0]*b[0] + g[1][1]*a[1]*b[1] + g[2][2]*a[2]*b[2] + g[3][3]*a[3]*b[3]
 
 
 # Produces the Minkowski scalar product according to the metric [[metric]].
@@ -386,12 +387,14 @@ def spinor_prod2(p, q):
     return p.λ_tilda_pa_dot.dot(q.λ_tilda_p__a_dot)[0][0]
 
 
-# Implementation of the Parker Taylor formula
-#
-# @param Particle[] gluons an array of n massless gluons with p1 + ... + pn = 0 and pi^2 = 0
-# @return complex the amplitude according to the PT formula
-#
 def PT(gluons):
+    #
+    # Implementation of the Parker Taylor formula
+    #
+    # @param Particle[] gluons an array of n massless gluons with p1 + ... + pn = 0 and pi^2 = 0
+    # @return complex the amplitude according to the PT formula
+    #
+
     # extract negative helicities
     helicities = [o.h for o in gluons]
     get_indexes = lambda x, xs: [i for (y, i) in zip(xs, range(len(xs))) if x == y]
@@ -445,13 +448,13 @@ def test(message, condition):
     ))
     return condition
 
-def P_ij(P,i,j):
-    # gives the sum of p's = p_i + ... + p_j
-    return np.sum(P[i:j+1], axis=0)
-
 # (p_i + ... + p_j)^2
 def P_ij__2(P,i,j):
     return md(P_ij(P,i,j), P_ij(P,i,j))
+
+def P_ij(P,i,j):
+    # @return complex gives the sum p_i + ... + p_j
+    return np.sum(P[i:j+1], axis=0)
 
 def J_a(gluons, rec = 1):
     # Off-shell current J_μ(1, ..., n)
@@ -460,9 +463,54 @@ def J_a(gluons, rec = 1):
     # @param int rec        recursion depth
     # @return array         column vector
     #
-    return J__a(gluons, rec).dot(g_ab).reshape(4,1)
+    return np.einsum('ij,i->i', g, J__a(gluons, rec))
+    #return g_ab.dot(J__a(gluons, rec))
+    #return J__a(gluons, rec).dot(g_ab)
+
 
 def J__a(gluons, rec = 1):
+    # Off-shell current J^μ(1, ..., n)
+    #
+    # @param array gluons   array of gluon Particle objects
+    # @param int rec        recursion depth
+    # @return array         row vector
+    #
+    n = len(gluons)
+
+    # recursion base
+    if n == 1:
+        return gluons[0].eps__a.reshape(4)
+    
+    P = np.array([g.p for g in gluons])
+
+    # initialize the return value to and array of zeros
+    ret = np.zeros(4, dtype=complex)
+
+    # 1st recursion step from i=0 to n-2
+    for i in range(0, n-1):
+        J_nu  = J_a(gluons[0:i+1], rec+1)
+        J_rho = J_a(gluons[i+1:],  rec+1)
+        v = v3(P_ij(P,0,i), P_ij(P,i+1,n))
+        ret += np.einsum('mnr,n,r->m', v, J_nu, J_rho)
+
+    v = v4()
+    # 2nd recursion step from i=0 to n-3 (including n-3) ...
+    for i in range(0, n-2):
+        # ... and j=i+1 to n-2 (including n-2)
+        for j in range(i+1, n-1):
+            J_nu    = J_a(gluons[0:i+1],   rec+1)
+            J_rho   = J_a(gluons[i+1:j+1], rec+1)
+            J_sigma = J_a(gluons[j+1:],    rec+1)
+            ret += np.einsum('mnrs,n,r,s->m', v, J_nu, J_rho, J_sigma)
+
+    # if we are not in the first recursion step the gluon propagator needs to be appended
+    if rec != 1:
+        ret *= gpg(P_ij(P, 0, n))
+
+    return ret
+
+
+def J__a_old(gluons, rec = 1):
     # Off-shell current J^μ(1, ..., n)
     #
     # @param array gluons   array of gluon Particle objects
@@ -475,7 +523,7 @@ def J__a(gluons, rec = 1):
 
     # recursion base
     if n == 1:
-        return gluons[0].eps__a # row vector
+        return gluons[0].eps__a
     
     # initialize the return value to and array of zeros
     ret = np.zeros(4, dtype=complex)
@@ -485,10 +533,10 @@ def J__a(gluons, rec = 1):
         P_0i   = P_ij(P,0,i)
         P_ip1n = P_ij(P,i+1,n)
         J_nu  = J_a(gluons[0:i+1], rec+1)
-        J_rho = J_a(gluons[i+1:], rec+1)
+        J_rho = J_a(gluons[i+1:],  rec+1)
 
         for mu, nu, rho in itertools.product(m, m, m):
-            ret[mu] += v3(mu, nu, rho, P_0i, P_ip1n)*J_nu[nu,0]*J_rho[rho,0]            
+            ret[mu] += v3(mu, nu, rho, P_0i, P_ip1n)*J_nu[nu,0]*J_rho[rho,0]
 
     # 2nd recursion step from i=0 to n-3 (including n-3) ...
     for i in range(0, n-2):
@@ -503,20 +551,19 @@ def J__a(gluons, rec = 1):
 
     # if we are not in the first recursion step the gluon propagator needs to be appended
     if rec != 1:
-        ret *= pg(P_ij(P, 0, n))
+        ret *= gpg(P_ij(P, 0, n))
 
-    return ret.reshape(1,4)
+    return ret
 
-
-def pg(p):
+def gpg(p):
     # Feynman rule for the gluon propagator
     #
     # @param array p    4-momentum of the virtual particle
-    # @return complex
+    # @return complex   the gluon propagator
     #
-    return -1j/md(p, p)
+    return -1j/np.einsum('i,ij,j', p, g, p)
 
-def v3(mu, nu, rho, P, Q):
+def v3_old(mu, nu, rho, P, Q):
     # Feynman rule for the 3-gluon vertex
     #
     # @param array P      4-momentum of gluon 1
@@ -537,7 +584,25 @@ def v3(mu, nu, rho, P, Q):
         - 2*g__ab[mu,nu]*P[rho]
     )
 
-def v4(mu, nu, rho, sigma):
+def v3(P, Q):
+    # Feynman rule for the 3-gluon vertex
+    #
+    # @param array P      4-momentum of gluon 1
+    # @param array Q      4-momentum of gluon 2
+    # @return ndarray
+    #
+    #     P,μ
+    #      |
+    #     / \
+    # P+Q,λ   Q,ν
+    #
+    return (1j/np.sqrt(2))*(
+            np.einsum('jk,i', g__ab, P-Q)
+        - 2*np.einsum('ij,k', g__ab, P)
+        + 2*np.einsum('ki,j', g__ab, Q)
+    )
+
+def v4_old(mu, nu, rho, sigma):
     # Feynman rule for the 4-gluon vertex
     #
     # @param int mu     Lorentz index of gluon 1
@@ -556,6 +621,110 @@ def v4(mu, nu, rho, sigma):
         -  g__ab[mu,nu]*g__ab[rho,sigma]
         -  g__ab[mu,sigma]*g__ab[nu,rho]
     )
+
+def v4():
+    # Feynman rule for the 4-gluon vertex
+    #
+    # @return ndarray
+    #
+    #  μ    ν
+    #    \/
+    #    /\
+    #  λ    ρ
+    # 
+    # i,j,k,l = mu,nu,rho,sigma
+    return 0.5j*(
+        2*np.einsum('ik,jl', g__ab, g__ab)
+        - np.einsum('ij,kl', g__ab, g__ab)
+        - np.einsum('il,jk', g__ab, g__ab)
+    )
+
+
+def v4const():
+    return np.array([
+      [[[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.5j,  0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.5j,  0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.5j,],],  
+
+      [[ 0.+0.j,  -0.-1.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],  
+
+      [[ 0.+0.j,   0.+0.j,  -0.-1.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],  
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,  -0.-1.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],],], 
+
+
+     [[[ 0.+0.j,   0.+0.5j,  0.+0.j,   0.+0.j, ],
+       [-0.-1.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],
+
+      [[ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,  -0.-0.5j,  0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,  -0.-0.5j,],],
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+1.j,   0.+0.j, ],
+       [ 0.+0.j,  -0.-0.5j,  0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+1.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,  -0.-0.5j,  0.+0.j,   0.+0.j, ],],],
+
+
+     [[[ 0.+0.j,   0.+0.j,   0.+0.5j,  0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [-0.-1.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,  -0.-0.5j,  0.+0.j, ],
+       [ 0.+0.j,   0.+1.j,   0.+0.j,   0.+0.j, ],
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],  
+
+      [[ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,  -0.-0.5j,  0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,  -0.-0.5j,],],  
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+1.j, ],   
+       [ 0.+0.j,   0.+0.j,  -0.-0.5j,  0.+0.j, ],],], 
+
+
+     [[[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.5j,],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [-0.-1.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],  
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,  -0.-0.5j,],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+1.j,   0.+0.j,   0.+0.j, ],],  
+
+      [[ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,  -0.-0.5j,],   
+       [ 0.+0.j,   0.+0.j,   0.+1.j,   0.+0.j, ],],  
+
+      [[ 0.+0.5j,  0.+0.j,   0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,  -0.-0.5j,  0.+0.j,   0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,  -0.-0.5j,  0.+0.j, ],   
+       [ 0.+0.j,   0.+0.j,   0.+0.j,   0.+0.j, ],],],
+    ])
 
 # J_μ column vector
 def J_a_2(gluons, P, rec = 1, it = "mu"):
@@ -594,34 +763,3 @@ def J__a_2(gluons, P, rec = 1, it = "mu"):
 
 def V3_2(mu, nu, rho, P, Q):
     return 1j*np.sqrt(2)*(g__ab[rho][mu]*Q[nu] - g__ab[mu][nu]*P[rho])
-
-def contract(a, b):
-    # Contraction of 2 tensors a and b
-    # a^μ * b_μ
-    #
-    # @param array a tensor a
-    # @param array b tensor b
-    # @return contraction of a and b
-    #
-
-    column = (4,1) # column vec => [[w],[x],[y],[z]]
-    row    = (1,4) # row vector => [[w, x, y, z]]
-    matrix = (4,4)
-
-    # two vectors -> return a number
-    if (a.shape == row and b.shape == column):
-        return a.dot(b)[0,0]
-
-    # contraction of tensor with vector -> return a row vector
-    if (a.shape == matrix and b.shape == column):
-        return a.dot(b).reshape(row)
-
-    # contraction of vector with tensor -> return a row vector
-    if (a.shape == row and b.shape == matrix):
-        return a.dot(b).reshape(column)
-
-    # contraction of tensor with tensor -> return a tensor
-    if (a.shape == matrix and b.shape == matrix):
-        return a.dot(b)
-
-    raise ValueError('Dimensions of a and/or b are wrong.')

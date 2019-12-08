@@ -1,6 +1,6 @@
 % diagram_co_4gluon_vertex.t1 -- generated automatically from diagram_co_4gluon_vertex.log
 % Think twice before editing THIS file!
-\fmfL(-4.24265,-4.24265,rt){$\sigma $}
-\fmfL(-4.24265,34.24265,rb){$\mu $}
-\fmfL(34.24265,-4.24265,lt){$\rho $}
-\fmfL(34.24265,34.24265,lb){$\nu $}
+\fmfL(-4.30652,-4.30652,rt){$\sigma $}
+\fmfL(-4.30652,34.29857,rb){$\mu $}
+\fmfL(34.29857,-4.30652,lt){$\rho $}
+\fmfL(34.29857,34.29857,lb){$\nu $}
